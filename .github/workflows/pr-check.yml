@@ -1,0 +1,60 @@
+name: Pull Request Check
+
+# Executa apenas em PRs para master/main
+on:
+  pull_request:
+    branches: [ master, main ]
+    types: [opened, synchronize, reopened]
+
+jobs:
+  # Job de validação para PRs
+  pr-validation:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Run tests
+      run: npm run test -- --no-watch --no-progress --browsers=ChromeHeadless
+
+    - name: Run linting (if available)
+      run: |
+        if npm list @angular-eslint/eslint-plugin >/dev/null 2>&1; then
+          npm run lint
+        else
+          echo "Linting not configured, skipping..."
+        fi
+      continue-on-error: true
+
+    - name: Build for production (validation)
+      run: npm run build --if-present
+
+    - name: Check build output
+      run: |
+        if [ -d "./dist/sistema-polos-frontend" ]; then
+          echo "✅ Build successful - artifacts generated"
+          ls -la ./dist/sistema-polos-frontend/
+        else
+          echo "❌ Build failed - no artifacts found"
+          exit 1
+        fi
+
+    - name: PR Status Comment
+      run: |
+        echo "## 🔍 Pull Request Validation Results"
+        echo ""
+        echo "✅ **Tests:** Passed"
+        echo "✅ **Build:** Successful" 
+        echo "✅ **Ready for merge:** This PR can be safely merged"
+        echo ""
+        echo "⚡ **Next steps:** After merge to master, automatic deployment will be triggered"
