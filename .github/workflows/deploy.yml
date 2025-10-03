@@ -38,7 +38,7 @@ jobs:
       run: npm ci
 
     - name: Run tests
-      run: npm run test -- --no-watch --no-progress --browsers=ChromeHeadless
+      run: npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
 
     - name: Run linting (if available)
       run: |
@@ -49,18 +49,31 @@ jobs:
         fi
       continue-on-error: true
 
-    - name: Build for production
-      run: npm run build --if-present
+    - name: Build for production (SPA mode)
+      run: npm run build -- --configuration spa
 
     - name: Setup Pages
       uses: actions/configure-pages@v4
+      with:
+        enablement: true
       if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
 
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v3
       if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
       with:
-        path: './dist/sistema-polos-frontend/browser'
+        path: './dist/sistema-polos-frontend'
+    
+    - name: Create 404.html for SPA routing
+      if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
+      run: |
+        if [ -f "./dist/sistema-polos-frontend/index.html" ]; then
+          cp ./dist/sistema-polos-frontend/index.html ./dist/sistema-polos-frontend/404.html
+          echo "✅ Created 404.html for SPA routing"
+        else
+          echo "❌ index.html not found in build output"
+          ls -la ./dist/sistema-polos-frontend/
+        fi
 
   # Job de Deploy (só executa na branch master/main)
   deploy:
