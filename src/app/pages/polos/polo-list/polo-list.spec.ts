@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PoloList } from './polo-list';
+import { PoloListComponent } from './polo-list';
 
-describe('PoloList', () => {
-  let component: PoloList;
-  let fixture: ComponentFixture<PoloList>;
+describe('PoloListComponent', () => {
+  let component: PoloListComponent;
+  let fixture: ComponentFixture<PoloListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PoloList]
+      imports: [PoloListComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(PoloList);
+    fixture = TestBed.createComponent(PoloListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

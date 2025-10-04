@@ -1,4 +1,4 @@
-import { RouterModule, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 import { polosRoutes } from './pages/polos/polos.routes';
 
 const routes: Routes = [

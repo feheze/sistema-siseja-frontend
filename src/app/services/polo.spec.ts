@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { Polo } from './polo';
+import { PoloService } from './polo';
 
 describe('Polo', () => {
-  let service: Polo;
+  let service: PoloService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(Polo);
+    service = TestBed.inject(PoloService);
   });
 
   it('should be created', () => {

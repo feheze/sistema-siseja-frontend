@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PoloDetail } from './polo-detail';
+import { PoloDetailComponent  } from './polo-detail';
 
-describe('PoloDetail', () => {
-  let component: PoloDetail;
-  let fixture: ComponentFixture<PoloDetail>;
+describe('PoloDetailComponent', () => {
+  let component: PoloDetailComponent;
+  let fixture: ComponentFixture<PoloDetailComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PoloDetail]
+      imports: [PoloDetailComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(PoloDetail);
+    fixture = TestBed.createComponent(PoloDetailComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

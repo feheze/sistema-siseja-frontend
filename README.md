@@ -1,10 +1,10 @@
 # Sistema SISEJA - Frontend
 
-Interface de usuário para gerenciamento de polos de faculdade desenvolvida com Angular 19.
+Interface de usuário para gerenciamento de polos de faculdade desenvolvida com Angular 20.
 
 ## 🚀 Tecnologias
 
-- **Angular 19** - Framework TypeScript para desenvolvimento web
+- **Angular 20** - Framework TypeScript para desenvolvimento web
 - **TypeScript** - Linguagem de programação fortemente tipada
 - **SCSS** - Pré-processador CSS para estilização
 - **Angular Router** - Roteamento de páginas single-page application
@@ -326,4 +326,4 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 
 ---
 
-🎨 **Sistema SISEJA Frontend** - Desenvolvido com Angular 19
+🎨 **Sistema SISEJA Frontend** - Desenvolvido com Angular 20
