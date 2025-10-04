@@ -1,0 +1,14 @@
+@if (polo()) {
+  <div>
+    <h2>Detalhes do Polo: {{ polo()?.nome }}</h2>
+    <p><strong>Endereço:</strong> {{ polo()?.endereco }}</p>
+    <p><strong>Cidade:</strong> {{ polo()?.cidade }}</p>
+    <p><strong>Estado:</strong> {{ polo()?.estado }}</p>
+    <p><strong>CEP:</strong> {{ polo()?.cep }}</p>
+    <p><strong>Telefone:</strong> {{ polo()?.telefone }}</p>
+    <p><strong>Email:</strong> {{ polo()?.email }}</p>
+    <p><strong>Coordenador:</strong> {{ polo()?.coordenador }}</p>
+    <p><strong>Ativo:</strong> {{ polo()?.ativo ? 'Sim' : 'Não' }}</p>
+    <p><strong>Data de Criação:</strong> {{ polo()?.dataCriacao | date }}</p>
+  </div>
+}

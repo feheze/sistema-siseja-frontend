@@ -1,12 +1,16 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { NavigationComponent } from './components/navigation/navigation';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
-  templateUrl: './app.html',
-  styleUrl: './app.scss'
+  imports: [NavigationComponent],
+  template: `<app-navigation />`,
+  styles: [`
+    :host {
+      display: block;
+      height: 100vh;
+    }
+  `],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class App {
-  protected readonly title = signal('sistema-polos-frontend');
-}
+export class AppComponent {}

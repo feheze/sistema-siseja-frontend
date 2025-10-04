@@ -1,0 +1,35 @@
+.sidenav-container {
+  height: 100vh;
+  
+  .sidenav {
+    width: 250px;
+    
+    mat-toolbar {
+      background: inherit;
+    }
+  }
+  
+  mat-sidenav-content {
+    mat-toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+    
+    .content {
+      padding: 1rem;
+    }
+  }
+}
+
+.active {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+mat-nav-list {
+  a {
+    mat-icon {
+      margin-right: 0.5rem;
+    }
+  }
+}

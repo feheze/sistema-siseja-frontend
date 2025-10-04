@@ -1,1 +1,134 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+// Tema dark moderno com cores vibrantes
+$theme: mat.define-theme((
+  color: (
+    theme-type: dark,
+    primary: mat.$cyan-palette,      // Ciano vibrante para elementos principais
+    tertiary: mat.$violet-palette,   // Violeta para acentos e destaques
+  ),
+  typography: (
+    brand-family: 'Roboto',
+    plain-family: 'Roboto',
+    bold-weight: 600,
+  ),
+  density: (
+    scale: 0,
+  )
+));
+
+@include mat.all-component-themes($theme);
+
+// Estilos globais personalizados para o tema dark
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+  background-attachment: fixed;
+  color: #e0e0e0;
+}
+
+// Customizações adicionais para um visual mais moderno
+.mat-mdc-card {
+  background: rgba(30, 30, 46, 0.9) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 229, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 229, 255, 0.1);
+}
+
+.mat-toolbar {
+  background: rgba(20, 20, 35, 0.95) !important;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 229, 255, 0.2);
+}
+
+// Scrollbar personalizada
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a2e;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #00e5ff 0%, #9c27b0 100%);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #00b8d4 0%, #7b1fa2 100%);
+}
+
+// Efeitos de hover e focus aprimorados
+.mat-mdc-button,
+.mat-mdc-raised-button,
+.mat-mdc-outlined-button {
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 229, 255, 0.3);
+  }
+}
+
+// Input fields com brilho
+.mat-mdc-form-field {
+  .mat-mdc-text-field-wrapper {
+    background: rgba(30, 30, 46, 0.6);
+    border-radius: 8px;
+  }
+  
+  &.mat-focused {
+    .mat-mdc-text-field-wrapper {
+      box-shadow: 0 0 10px rgba(0, 229, 255, 0.3);
+    }
+  }
+}
+
+// Animação sutil de fade-in para elementos
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mat-mdc-card,
+.mat-mdc-dialog-container {
+  animation: fadeIn 0.3s ease-out;
+}
+
+// Links com cor ciano
+a {
+  color: #00e5ff;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  
+  &:hover {
+    color: #00b8d4;
+    text-shadow: 0 0 8px rgba(0, 229, 255, 0.5);
+  }
+}
+
+// Seleção de texto personalizada
+::selection {
+  background: rgba(0, 229, 255, 0.3);
+  color: #ffffff;
+}
+
+::-moz-selection {
+  background: rgba(0, 229, 255, 0.3);
+  color: #ffffff;
+}

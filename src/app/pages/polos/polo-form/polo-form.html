@@ -1,0 +1,45 @@
+<form [formGroup]="poloForm" (ngSubmit)="onSubmit()">
+  <mat-form-field appearance="fill">
+    <mat-label>Nome</mat-label>
+    <input matInput formControlName="nome" required>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Endereço</mat-label>
+    <input matInput formControlName="endereco" required>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Cidade</mat-label>
+    <input matInput formControlName="cidade" required>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Estado</mat-label>
+    <input matInput formControlName="estado" required>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>CEP</mat-label>
+    <input matInput formControlName="cep" required>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Telefone</mat-label>
+    <input matInput formControlName="telefone" required>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Email</mat-label>
+    <input matInput formControlName="email" required>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Coordenador</mat-label>
+    <input matInput formControlName="coordenador" required>
+  </mat-form-field>
+
+  <mat-checkbox formControlName="ativo">Ativo</mat-checkbox>
+
+  <button mat-raised-button color="primary" type="submit">Salvar</button>
+</form>
