@@ -58,7 +58,7 @@ module.exports = function (config) {
           '--remote-debugging-port=9222'
         ]
       },
-      ChromeHeadless: {
+      ChromeHeadlessCI: {
         base: 'ChromeHeadless',
         flags: [
           '--no-sandbox',
