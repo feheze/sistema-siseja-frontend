@@ -50,7 +50,7 @@ jobs:
       continue-on-error: true
 
     - name: Build for production (SPA mode)
-      run: npm run build -- --configuration spa
+      run: npm run build -- --configuration spa --base-href /sistema-siseja-frontend/
 
     - name: Setup Pages
       uses: actions/configure-pages@v4
@@ -67,12 +67,12 @@ jobs:
     - name: Create 404.html for SPA routing
       if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
       run: |
-        if [ -f "./dist/sistema-siseja-frontend/browser/index.csr.html" ]; then
-          cp ./dist/sistema-siseja-frontend/browser/index.csr.html ./dist/sistema-siseja-frontend/404.html
+        if [ -f "./dist/sistema-siseja-frontend/index.html" ]; then
+          cp ./dist/sistema-siseja-frontend/index.html ./dist/sistema-siseja-frontend/404.html
           echo "✅ Created 404.html for SPA routing"
         else
-          echo "❌ index.csr.html not found in build output"
-          ls -la ./dist/sistema-siseja-frontend/browser/
+          echo "❌ index.html not found in build output"
+          ls -la ./dist/sistema-siseja-frontend/
         fi
 
   # Job de Deploy (só executa na branch master/main)
