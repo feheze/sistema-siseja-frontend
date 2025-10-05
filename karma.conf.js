@@ -42,7 +42,7 @@ module.exports = function (config) {
       }
     },
     reporters: ['progress', 'kjhtml', 'coverage'],
-    browsers: [process.env.CI ? 'ChromiumHeadlessCI' : 'Chrome'],
+    browsers: [process.env.CI ? 'ChromeHeadless' : 'Chrome'],
     restartOnFileChange: true,
     customLaunchers: {
       ChromeHeadless: {
@@ -55,15 +55,6 @@ module.exports = function (config) {
           '--no-sandbox',
           '--disable-dev-shm-usage',
           '--disable-extensions',
-          '--remote-debugging-port=9222'
-        ]
-      },
-      ChromiumHeadlessCI: {
-        base: 'ChromeHeadless',
-        flags: [
-          '--no-sandbox',
-          '--disable-web-security',
-          '--disable-gpu',
           '--remote-debugging-port=9222'
         ]
       }
