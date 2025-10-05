@@ -2,11 +2,19 @@ import { RenderMode, ServerRoute } from '@angular/ssr';
 
 export const serverRoutes: ServerRoute[] = [
   {
-    path: '**',
-    renderMode: RenderMode.Prerender
+    path: 'polos',
+    renderMode: RenderMode.Client // Mude para Client para SPA
   },
   {
-    path: 'polos/:id', // Rota para detalhes do polo
-    renderMode: RenderMode.Server // Renderiza no servidor
+    path: 'polos/new',
+    renderMode: RenderMode.Client // Mude para Client para SPA
   },
+  {
+    path: 'polos/:id',
+    renderMode: RenderMode.Client // Mude para Client para SPA
+  },
+  {
+    path: '**',
+    renderMode: RenderMode.Client // Mude para Client para SPA
+  }
 ];
