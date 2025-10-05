@@ -62,17 +62,17 @@ jobs:
       uses: actions/upload-pages-artifact@v3
       if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
       with:
-        path: './dist/sistema-polos-frontend'
+        path: './dist/sistema-siseja-frontend'
     
     - name: Create 404.html for SPA routing
       if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
       run: |
-        if [ -f "./dist/sistema-polos-frontend/index.html" ]; then
-          cp ./dist/sistema-polos-frontend/index.html ./dist/sistema-polos-frontend/404.html
+        if [ -f "./dist/sistema-siseja-frontend/browser/index.csr.html" ]; then
+          cp ./dist/sistema-siseja-frontend/browser/index.csr.html ./dist/sistema-siseja-frontend/404.html
           echo "✅ Created 404.html for SPA routing"
         else
-          echo "❌ index.html not found in build output"
-          ls -la ./dist/sistema-polos-frontend/
+          echo "❌ index.csr.html not found in build output"
+          ls -la ./dist/sistema-siseja-frontend/browser/
         fi
 
   # Job de Deploy (só executa na branch master/main)

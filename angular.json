@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "sistema-polos-frontend": {
+    "sistema-siseja-frontend": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -29,8 +29,11 @@
             "styles": [
               "src/styles.scss"
             ],
-            "index": "src/index.html",
-            "outputMode": "static"
+            "server": "src/main.server.ts",
+            "outputMode": "server",
+            "ssr": {
+              "entry": "src/server.ts"
+            }
           },
           "configurations": {
             "production": {
@@ -46,8 +49,7 @@
                   "maximumError": "8kB"
                 }
               ],
-              "outputHashing": "all",
-              "optimization": true
+              "outputHashing": "all"
             },
             "development": {
               "optimization": false,
@@ -61,8 +63,23 @@
               ]
             },
             "spa": {
-              "optimization": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "6MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
+                }
+              ],
               "outputHashing": "all",
+              "optimization": true,
+              "index": "src/index.html", 
+              "outputMode": "static",
+              "ssr": false,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -77,10 +94,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "sistema-polos-frontend:build:production"
+              "buildTarget": "sistema-siseja-frontend:build:production"
             },
             "development": {
-              "buildTarget": "sistema-polos-frontend:build:development"
+              "buildTarget": "sistema-siseja-frontend:build:development"
             }
           },
           "defaultConfiguration": "development"

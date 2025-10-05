@@ -1,5 +1,5 @@
 {
-  "name": "sistema-polos-frontend",
+  "name": "sistema-siseja-frontend",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration spa",
     "test": "ng test",
-    "serve:ssr:sistema-polos-frontend": "node dist/sistema-polos-frontend/server/server.mjs"
+    "serve:ssr:sistema-siseja-frontend": "node dist/sistema-siseja-frontend/server/server.mjs"
   },
   "prettier": {
     "printWidth": 100,

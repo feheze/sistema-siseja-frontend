@@ -41,9 +41,9 @@ jobs:
 
     - name: Check build output
       run: |
-        if [ -d "./dist/sistema-polos-frontend" ]; then
+        if [ -d "./dist/sistema-siseja-frontend" ]; then
           echo "✅ Build successful - artifacts generated"
-          ls -la ./dist/sistema-polos-frontend/
+          ls -la ./dist/sistema-siseja-frontend/
         else
           echo "❌ Build failed - no artifacts found"
           exit 1
