@@ -6,7 +6,14 @@ const routes: Routes = [
   // other routes
 ];
 
-export const routesAll: Routes = [
+function withRenderModeServer(routes: Routes): Routes {
+  return routes.map(route =>
+    route.path && route.path.includes(':')
+      ? { ...route, renderMode: 'server' }
+      : route
+  );
+}
+export const routesAll: Routes = withRenderModeServer([
   // 2. Desestrutura e combina as rotas de feature
   ...polosRoutes,
   
@@ -20,4 +27,4 @@ export const routesAll: Routes = [
 
   // Rota curinga para 404
   //{ path: '**', redirectTo: 'cadastros/aluno' } 
-];
+]);
