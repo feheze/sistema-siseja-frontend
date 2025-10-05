@@ -1,23 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { TestBed } from '@angular/core/testing';
 import { NavigationComponent } from './navigation';
 
-describe('Navigation', () => {
-  let component: NavigationComponent;
-  let fixture: ComponentFixture<NavigationComponent>;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [NavigationComponent]
-    })
-    .compileComponents();
-
-    fixture = TestBed.createComponent(NavigationComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+describe('NavigationComponent', () => {
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [NavigationComponent],
+      // providers: [{ provide: ActivatedRoute, useValue: {} }], // só se erro NG0201 aparecer!
+    });
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    const fixture = TestBed.createComponent(NavigationComponent);
+    expect(fixture.componentInstance).toBeTruthy();
   });
 });

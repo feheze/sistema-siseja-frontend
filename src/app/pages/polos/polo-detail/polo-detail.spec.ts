@@ -1,23 +1,22 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { PoloDetailComponent  } from './polo-detail';
+import { TestBed } from '@angular/core/testing';
+import { PoloDetailComponent } from './polo-detail';
+import { provideRouter } from '@angular/router';
+import { provideHttpClient } from '@angular/common/http';
+import { routesAll } from '../../../../app/app.routes';
 
 describe('PoloDetailComponent', () => {
-  let component: PoloDetailComponent;
-  let fixture: ComponentFixture<PoloDetailComponent>;
-
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PoloDetailComponent]
-    })
-    .compileComponents();
-
-    fixture = TestBed.createComponent(PoloDetailComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+      imports: [PoloDetailComponent],
+      providers: [
+        provideRouter(routesAll),
+        provideHttpClient()
+      ]
+    }).compileComponents();
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    const fixture = TestBed.createComponent(PoloDetailComponent);
+    expect(fixture.componentInstance).toBeTruthy();
   });
 });

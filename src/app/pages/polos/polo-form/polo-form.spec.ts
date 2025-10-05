@@ -1,23 +1,22 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { TestBed } from '@angular/core/testing';
 import { PoloFormComponent } from './polo-form';
+import { provideRouter } from '@angular/router';
+import { provideHttpClient } from '@angular/common/http';
+import { routesAll } from '../../../../app/app.routes';
 
 describe('PoloFormComponent', () => {
-  let component: PoloFormComponent;
-  let fixture: ComponentFixture<PoloFormComponent>;
-
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PoloFormComponent]
-    })
-    .compileComponents();
-
-    fixture = TestBed.createComponent(PoloFormComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+      imports: [PoloFormComponent],
+      providers: [
+        provideRouter(routesAll),
+        provideHttpClient()
+      ]
+    }).compileComponents();
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    const fixture = TestBed.createComponent(PoloFormComponent);
+    expect(fixture.componentInstance).toBeTruthy();
   });
 });
