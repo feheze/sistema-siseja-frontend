@@ -62,17 +62,18 @@ jobs:
       uses: actions/upload-pages-artifact@v3
       if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
       with:
-        path: './dist/sistema-siseja-frontend'
+        path: './dist/sistema-siseja-frontend/browser'
     
     - name: Create 404.html for SPA routing
       if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
       run: |
-        if [ -f "./dist/sistema-siseja-frontend/index.html" ]; then
-          cp ./dist/sistema-siseja-frontend/index.html ./dist/sistema-siseja-frontend/404.html
+        if [ -f "./dist/sistema-siseja-frontend/browser/index.html" ]; then
+          cp ./dist/sistema-siseja-frontend/browser/index.html ./dist/sistema-siseja-frontend/browser/404.html
           echo "✅ Created 404.html for SPA routing"
         else
           echo "❌ index.html not found in build output"
           ls -la ./dist/sistema-siseja-frontend/
+          ls -la ./dist/sistema-siseja-frontend/browser/
         fi
 
   # Job de Deploy (só executa na branch master/main)
