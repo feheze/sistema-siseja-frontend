@@ -10,7 +10,7 @@ on:
 
 # Permissões necessárias para deploy no GitHub Pages
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -52,6 +52,27 @@ jobs:
     - name: Build for production (SPA mode)
       run: npm run build -- --configuration spa --base-href /sistema-siseja-frontend/
 
+    # NOVO PASSO: Renomeia o index.csr.html para index.html
+    - name: Rename index file for GitHub Pages
+      if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
+      run: |
+        if [ -f "./dist/sistema-siseja-frontend/browser/index.csr.html" ]; then
+          mv ./dist/sistema-siseja-frontend/browser/index.csr.html ./dist/sistema-siseja-frontend/browser/index.html
+          echo "✅ Renamed index.csr.html to index.html"
+        else
+          echo "❌ index.csr.html not found, skipping rename."
+        fi
+
+    - name: Create 404.html for SPA routing
+      if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
+      run: |
+        if [ -f "./dist/sistema-siseja-frontend/browser/index.html" ]; then
+          cp ./dist/sistema-siseja-frontend/browser/index.html ./dist/sistema-siseja-frontend/browser/404.html
+          echo "✅ Created 404.html from index.html"
+        else
+          echo "❌ index.html not found, cannot create 404.html."
+        fi
+
     - name: Setup Pages
       uses: actions/configure-pages@v4
       with:
@@ -62,19 +83,8 @@ jobs:
       uses: actions/upload-pages-artifact@v3
       if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
       with:
+        # Upload o conteúdo da pasta 'browser' que contém o index.html
         path: './dist/sistema-siseja-frontend/browser'
-    
-    - name: Create 404.html for SPA routing
-      if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
-      run: |
-        if [ -f "./dist/sistema-siseja-frontend/browser/index.html" ]; then
-          cp ./dist/sistema-siseja-frontend/browser/index.html ./dist/sistema-siseja-frontend/browser/404.html
-          echo "✅ Created 404.html for SPA routing"
-        else
-          echo "❌ index.html not found in build output"
-          ls -la ./dist/sistema-siseja-frontend/
-          ls -la ./dist/sistema-siseja-frontend/browser/
-        fi
 
   # Job de Deploy (só executa na branch master/main)
   deploy:
