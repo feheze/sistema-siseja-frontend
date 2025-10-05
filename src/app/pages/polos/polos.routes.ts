@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
 import { PoloListComponent } from './polo-list/polo-list';
-import { PoloDetailComponent } from './polo-detail/polo-detail';
 import { PoloFormComponent } from './polo-form/polo-form';
+import { PoloDetailComponent } from './polo-detail/polo-detail';
 
 export const polosRoutes: Routes = [
-  { path: 'polos', component: PoloListComponent },
-  { path: 'polos/new', component: PoloFormComponent },
-  { path: 'polos/:id', component: PoloDetailComponent },
+  { path: '', component: PoloListComponent },         // Lista de polos
+  { path: 'new', component: PoloFormComponent },      // Cadastro de polo
+  { path: ':id', component: PoloDetailComponent }     // Detalhe do polo
 ];
