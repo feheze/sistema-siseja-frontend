@@ -44,7 +44,15 @@ export class NavigationComponent {
         { label: 'Cadastro Novo', icon: 'add', route: '/polos/new' }        
       ]
     },
-    { label: 'Cursos', icon: 'school', route: '/cursos' },
+    {
+      label: 'Cursos',
+      icon: 'school',
+      route: '/cursos',
+      children: [
+        { label: 'Listar', icon: 'search', route: '/cursos' },
+        { label: 'Cadastro Novo', icon: 'add', route: '/cursos/new' }
+      ]
+    },
     { label: 'Alunos', icon: 'people', route: '/alunos' },
     { label: 'Relatórios', icon: 'assessment', route: '/relatorios' }
   ];

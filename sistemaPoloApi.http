@@ -1,0 +1,586 @@
+@SistemaPolosApi_HostAddress = http://localhost:5000
+
+### ================================
+### HEALTH CHECK ENDPOINTS
+### ================================
+
+### Health Check Geral
+GET {{SistemaPolosApi_HostAddress}}/health
+Accept: application/json
+
+###
+
+### Health Check MongoDB/Azure Cosmos DB
+GET {{SistemaPolosApi_HostAddress}}/health/mongodb
+Accept: application/json
+
+###
+
+### Health Check with Correlation ID
+GET {{SistemaPolosApi_HostAddress}}/health
+Accept: application/json
+X-Correlation-ID: test-correlation-123
+
+###
+
+### ================================
+### MIDDLEWARE TESTING
+### ================================
+
+### Test Idempotency - POST with Idempotency Key (Execute twice to see caching)
+POST {{SistemaPolosApi_HostAddress}}/api/polos
+Content-Type: application/json
+X-Idempotency-Key: polo-creation-key-001
+
+{
+    "nome": "Polo Teste Idempotency",
+    "endereco": "Rua Teste, 123",
+    "cidade": "São Paulo", 
+    "estado": "SP",
+    "cep": "01000-000",
+    "telefone": "(11) 1234-5678",
+    "email": "teste@siseja.edu.br",
+    "coordenador": "Coordenador Teste",
+    "capacidadeMaxima": 100,
+    "ativo": true
+}
+
+###
+
+### Test Exception Handling (Invalid ID format)
+GET {{SistemaPolosApi_HostAddress}}/api/polos/invalid-id-format
+Accept: application/json
+
+###
+
+### ================================
+### DASHBOARD ENDPOINTS
+### ================================
+
+### Get Dashboard Metrics
+GET {{SistemaPolosApi_HostAddress}}/api/dashboard/metricas
+Accept: application/json
+
+###
+
+### Get Polo Statistics
+GET {{SistemaPolosApi_HostAddress}}/api/dashboard/polos/estatisticas
+Accept: application/json
+
+###
+
+### Get Enrollment Report
+GET {{SistemaPolosApi_HostAddress}}/api/dashboard/relatorio/matriculas?dataInicio=2023-01-01T00:00:00Z&dataFim=2023-12-31T23:59:59Z
+Accept: application/json
+
+###
+
+### ================================
+### POLO ENDPOINTS
+### ================================
+
+### Get All Polos
+GET {{SistemaPolosApi_HostAddress}}/api/polos
+Accept: application/json
+
+###
+
+### Get Polo by ID
+GET {{SistemaPolosApi_HostAddress}}/api/polos/676f8c8f123456789abc1234
+Accept: application/json
+
+###
+
+### Create New Polo
+POST {{SistemaPolosApi_HostAddress}}/api/polos
+Content-Type: application/json
+
+{
+    "nome": "Polo Brasília",
+    "endereco": "Rua das Flores, 123",
+    "cidade": "Brasília", 
+    "estado": "DF",
+    "cep": "70000-000",
+    "telefone": "(61) 3333-4444",
+    "email": "brasilia@siseja.edu.br",
+    "coordenador": "Maria Silva",
+    "capacidadeMaxima": 150,
+    "ativo": true
+}
+
+###
+
+### Update Polo
+PUT {{SistemaPolosApi_HostAddress}}/api/polos/676f8c8f123456789abc1234
+Content-Type: application/json
+
+{
+    "nome": "Polo Brasília - Atualizado",
+    "endereco": "Rua das Flores, 456",
+    "cidade": "Brasília", 
+    "estado": "DF",
+    "cep": "70000-001",
+    "telefone": "(61) 3333-5555",
+    "email": "brasilia@siseja.edu.br",
+    "coordenador": "Maria Silva Santos",
+    "capacidadeMaxima": 200,
+    "ativo": true
+}
+
+###
+
+### Delete Polo
+DELETE {{SistemaPolosApi_HostAddress}}/api/polos/676f8c8f123456789abc1234
+
+###
+
+### Get Polos by Estado
+GET {{SistemaPolosApi_HostAddress}}/api/polos/estado/SP
+Accept: application/json
+
+###
+
+### Get Active Polos
+GET {{SistemaPolosApi_HostAddress}}/api/polos/ativos
+Accept: application/json
+
+###
+
+### ================================
+### CURSO ENDPOINTS
+### ================================
+
+### Get All Cursos
+GET {{SistemaPolosApi_HostAddress}}/api/cursos
+Accept: application/json
+
+###
+
+### Get Curso by ID
+GET {{SistemaPolosApi_HostAddress}}/api/cursos/676f8c8f123456789abc5678
+Accept: application/json
+
+###
+
+### Create New Curso
+POST {{SistemaPolosApi_HostAddress}}/api/cursos
+Content-Type: application/json
+
+{
+    "nome": "Curso de Administração",
+    "codigo": "ADM001",
+    "descricao": "Curso superior de Administração com foco em gestão empresarial",
+    "cargaHoraria": 3000,
+    "duracaoMeses": 48,
+    "quantidadeModulos": 8,
+    "quantidadeDisciplinas": 40,
+    "modalidade": "EAD",
+    "nivel": "Graduação",
+    "areaConhecimento": "Ciências Sociais Aplicadas",
+    "coordenador": "Prof. João Santos",
+    "valorMensalidade": 450.00,
+    "vagasDisponiveis": 100,
+    "ativo": true,
+    "dataInicio": "2024-02-01T00:00:00Z"
+}
+
+###
+
+### Update Curso
+PUT {{SistemaPolosApi_HostAddress}}/api/cursos/676f8c8f123456789abc5678
+Content-Type: application/json
+
+{
+    "nome": "Curso de Administração - Atualizado",
+    "codigo": "ADM001",
+    "descricao": "Curso superior de Administração com foco em gestão empresarial e inovação",
+    "cargaHoraria": 3200,
+    "duracaoMeses": 48,
+    "quantidadeModulos": 8,
+    "quantidadeDisciplinas": 42,
+    "modalidade": "EAD",
+    "nivel": "Graduação",
+    "areaConhecimento": "Ciências Sociais Aplicadas",
+    "coordenador": "Prof. João Santos Silva",
+    "valorMensalidade": 480.00,
+    "vagasDisponiveis": 120,
+    "ativo": true,
+    "dataInicio": "2024-02-01T00:00:00Z"
+}
+
+###
+
+### Delete Curso
+DELETE {{SistemaPolosApi_HostAddress}}/api/cursos/676f8c8f123456789abc5678
+
+###
+
+### Get Active Cursos
+GET {{SistemaPolosApi_HostAddress}}/api/cursos/ativos
+Accept: application/json
+
+###
+
+### Get Cursos by Modalidade
+GET {{SistemaPolosApi_HostAddress}}/api/cursos/modalidade/EAD
+Accept: application/json
+
+###
+
+### Get Cursos by Nivel
+GET {{SistemaPolosApi_HostAddress}}/api/cursos/nivel/Graduação
+Accept: application/json
+
+###
+
+### ================================
+### ALUNO ENDPOINTS
+### ================================
+
+### Get All Alunos
+GET {{SistemaPolosApi_HostAddress}}/api/alunos
+Accept: application/json
+
+###
+
+### Get Aluno by ID
+GET {{SistemaPolosApi_HostAddress}}/api/alunos/676f8c8f123456789abc9999
+Accept: application/json
+
+###
+
+### Create New Aluno
+POST {{SistemaPolosApi_HostAddress}}/api/alunos
+Content-Type: application/json
+
+{
+    "nome": "João da Silva",
+    "email": "joao@email.com",
+    "cpf": "123.456.789-00",
+    "dataNascimento": "1995-05-15T00:00:00Z",
+    "rg": "12.345.678-9",
+    "genero": "Masculino",
+    "telefone": "(11) 99999-8888",
+    "endereco": "Rua A, 123",
+    "cidade": "São Paulo",
+    "estado": "SP",
+    "cep": "01000-000",
+    "poloId": "676f8c8f123456789abc1234",
+    "curso": "Administração",
+    "periodo": "Noturno",
+    "situacao": "Ativo"
+}
+
+###
+
+### Update Aluno
+PUT {{SistemaPolosApi_HostAddress}}/api/alunos/676f8c8f123456789abc9999
+Content-Type: application/json
+
+{
+    "nome": "João da Silva Santos",
+    "email": "joao.santos@email.com",
+    "cpf": "123.456.789-00",
+    "dataNascimento": "1995-05-15T00:00:00Z",
+    "rg": "12.345.678-9",
+    "genero": "Masculino",
+    "telefone": "(11) 99999-7777",
+    "endereco": "Rua A, 456",
+    "cidade": "São Paulo",
+    "estado": "SP",
+    "cep": "01000-001",
+    "poloId": "676f8c8f123456789abc1234",
+    "curso": "Administração",
+    "periodo": "Noturno",
+    "situacao": "Ativo"
+}
+
+###
+
+### Delete Aluno
+DELETE {{SistemaPolosApi_HostAddress}}/api/alunos/676f8c8f123456789abc9999
+
+###
+
+### Get Alunos by Polo
+GET {{SistemaPolosApi_HostAddress}}/api/alunos/polo/676f8c8f123456789abc1234
+Accept: application/json
+
+###
+
+### Get Alunos by Situacao
+GET {{SistemaPolosApi_HostAddress}}/api/alunos/situacao/Ativo
+Accept: application/json
+
+###
+
+### Get Alunos by Curso
+GET {{SistemaPolosApi_HostAddress}}/api/alunos/curso/Administração
+Accept: application/json
+
+###
+
+### ================================
+### DOCUMENTO ENDPOINTS
+### ================================
+
+### Get All Documentos
+GET {{SistemaPolosApi_HostAddress}}/api/documentos
+Accept: application/json
+
+###
+
+### Get Documento by ID
+GET {{SistemaPolosApi_HostAddress}}/api/documentos/676f8c8f123456789abcdddd
+Accept: application/json
+
+###
+
+### Get Documentos by Aluno
+GET {{SistemaPolosApi_HostAddress}}/api/documentos/aluno/676f8c8f123456789abc9999
+Accept: application/json
+
+###
+
+### Get Documentos by Status
+GET {{SistemaPolosApi_HostAddress}}/api/documentos/status/Pendente
+Accept: application/json
+
+###
+
+### Get Documentos by Tipo
+GET {{SistemaPolosApi_HostAddress}}/api/documentos/tipo/CPF
+Accept: application/json
+
+###
+
+### Get Documentos Pendentes
+GET {{SistemaPolosApi_HostAddress}}/api/documentos/pendentes
+Accept: application/json
+
+###
+
+### Create New Documento
+POST {{SistemaPolosApi_HostAddress}}/api/documentos
+Content-Type: application/json
+
+{
+    "alunoId": "676f8c8f123456789abc9999",
+    "tipoDocumento": "RG",
+    "nomeArquivo": "rg_joao.pdf",
+    "caminhoArquivo": "/uploads/documentos/rg_joao.pdf",
+    "tamanhoArquivo": 1024000,
+    "descricao": "RG do João da Silva",
+    "obrigatorio": true
+}
+
+###
+
+### Update Documento
+PUT {{SistemaPolosApi_HostAddress}}/api/documentos/676f8c8f123456789abcdddd
+Content-Type: application/json
+
+{
+    "tipoDocumento": "RG",
+    "nomeArquivo": "rg_joao_atualizado.pdf",
+    "caminhoArquivo": "/uploads/documentos/rg_joao_atualizado.pdf",
+    "tamanhoArquivo": 1200000,
+    "descricao": "RG do João da Silva - versão atualizada",
+    "obrigatorio": true
+}
+
+###
+
+### Aprovar Documento
+PATCH {{SistemaPolosApi_HostAddress}}/api/documentos/676f8c8f123456789abcdddd/aprovar
+Content-Type: application/json
+
+{
+    "aprovadoPor": "Ana Costa",
+    "observacoes": "Documento aprovado conforme verificação"
+}
+
+###
+
+### Rejeitar Documento  
+PATCH {{SistemaPolosApi_HostAddress}}/api/documentos/676f8c8f123456789abcdddd/rejeitar
+Content-Type: application/json
+
+{
+    "rejeitadoPor": "Ana Costa",
+    "observacoes": "Documento ilegível, solicitar novo upload"
+}
+
+###
+
+### Delete Documento
+DELETE {{SistemaPolosApi_HostAddress}}/api/documentos/676f8c8f123456789abcdddd
+
+###
+
+### Download Documento
+GET {{SistemaPolosApi_HostAddress}}/api/documentos/676f8c8f123456789abcdddd/download
+
+###
+
+### Upload Documento (Form Data)
+POST {{SistemaPolosApi_HostAddress}}/api/documentos/upload
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="alunoId"
+
+676f8c8f123456789abc9999
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="tipoDocumento"
+
+CPF
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="descricao"
+
+CPF do aluno João
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="obrigatorio"
+
+true
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="arquivo"; filename="cpf_joao.pdf"
+Content-Type: application/pdf
+
+[Binary file content here]
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+###
+
+### ================================
+### CERTIFICADO LAYOUT ENDPOINTS
+### ================================
+
+### Get All Certificado Layouts
+GET {{SistemaPolosApi_HostAddress}}/api/certificado-layouts
+Accept: application/json
+
+###
+
+### Get Certificado Layout by ID
+GET {{SistemaPolosApi_HostAddress}}/api/certificado-layouts/676f8c8f123456789abceeee
+Accept: application/json
+
+###
+
+### Get Certificado Layouts Ativos
+GET {{SistemaPolosApi_HostAddress}}/api/certificado-layouts/ativos
+Accept: application/json
+
+###
+
+### Create New Certificado Layout
+POST {{SistemaPolosApi_HostAddress}}/api/certificado-layouts
+Content-Type: application/json
+
+{
+    "nomeLayout": "Layout Padrão Graduação",
+    "modeloCertificado": "Modelo_A",
+    "urlTemplate": "/templates/modelo_a.html",
+    "camposDinamicos": {
+        "incluirNomeAluno": true,
+        "incluirNomeCurso": true,
+        "incluirDataConclusao": true,
+        "incluirCargaHoraria": true,
+        "incluirNomePolo": true,
+        "incluirNotaFinal": false,
+        "camposPersonalizados": [
+            {
+                "nome": "Instituição",
+                "valor": "SISEJA - Sistema de Ensino",
+                "posicaoX": 100,
+                "posicaoY": 50,
+                "fonteTamanho": 16,
+                "fonteCor": "#000000"
+            }
+        ]
+    },
+    "regrasEmissao": {
+        "statusAlunoRequerido": "Formado",
+        "notaMinima": 7.0,
+        "frequenciaMinima": 75.0,
+        "requerAprovacaoManual": false,
+        "cursosAplicaveis": ["Administração", "Pedagogia"],
+        "polosAplicaveis": ["676f8c8f123456789abc1234"]
+    },
+    "configuracoesVisuais": {
+        "largura": 2970,
+        "altura": 2100,
+        "orientacao": "landscape",
+        "margemSuperior": 100,
+        "margemInferior": 100,
+        "margemEsquerda": 100,
+        "margemDireita": 100,
+        "fontePrincipal": "Arial",
+        "tamanhoFonteTitulo": 24,
+        "tamanhoFonteTexto": 14,
+        "corTitulo": "#000000",
+        "corTexto": "#333333"
+    },
+    "ativo": true
+}
+
+###
+
+### Update Certificado Layout
+PUT {{SistemaPolosApi_HostAddress}}/api/certificado-layouts/676f8c8f123456789abceeee
+Content-Type: application/json
+
+{
+    "nomeLayout": "Layout Padrão Graduação - Atualizado",
+    "modeloCertificado": "Modelo_A_V2",
+    "urlTemplate": "/templates/modelo_a_v2.html",
+    "camposDinamicos": {
+        "incluirNomeAluno": true,
+        "incluirNomeCurso": true,
+        "incluirDataConclusao": true,
+        "incluirCargaHoraria": true,
+        "incluirNomePolo": true,
+        "incluirNotaFinal": true,
+        "camposPersonalizados": [
+            {
+                "nome": "Instituição",
+                "valor": "SISEJA - Sistema de Ensino Superior",
+                "posicaoX": 100,
+                "posicaoY": 50,
+                "fonteTamanho": 18,
+                "fonteCor": "#000000"
+            }
+        ]
+    },
+    "regrasEmissao": {
+        "statusAlunoRequerido": "Formado",
+        "notaMinima": 6.5,
+        "frequenciaMinima": 70.0,
+        "requerAprovacaoManual": true,
+        "cursosAplicaveis": ["Administração", "Pedagogia", "Direito"],
+        "polosAplicaveis": ["676f8c8f123456789abc1234"]
+    },
+    "configuracoesVisuais": {
+        "largura": 2970,
+        "altura": 2100,
+        "orientacao": "landscape",
+        "margemSuperior": 100,
+        "margemInferior": 100,
+        "margemEsquerda": 100,
+        "margemDireita": 100,
+        "fontePrincipal": "Times New Roman",
+        "tamanhoFonteTitulo": 26,
+        "tamanhoFonteTexto": 16,
+        "corTitulo": "#000000",
+        "corTexto": "#333333"
+    },
+    "ativo": true
+}
+
+###
+
+### Delete Certificado Layout
+DELETE {{SistemaPolosApi_HostAddress}}/api/certificado-layouts/676f8c8f123456789abceeee
+
+###

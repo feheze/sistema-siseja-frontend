@@ -1,27 +1,188 @@
- .polo-form-container {
-      padding: 24px;
-      max-width: 800px;
-      margin: 0 auto;
+/* Polo Form Styles - Material Design */
+.polo-form-container {
+  min-height: 100vh;
+  background: #070214c7;
+
+  .spacer {
+    flex: 1 1 auto;
+  }
+
+  .loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    color: #666666;
+
+    p {
+      margin-top: 16px;
+      font-size: 16px;
     }
+  }
 
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
+  form {
+    padding: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
 
-    .form-row {
-      display: flex;
-      gap: 16px;
+  .form-card {
+    margin-bottom: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-radius: 8px;
 
-      mat-form-field {
-        flex: 1;
+    mat-card-header {
+      background: linear-gradient(135deg, #1f548a 0%, #2381ce 100%);
+      color: white;
+      padding: 16px 20px;
+      border-radius: 8px 8px 0 0;
+
+      mat-card-title {
+        color: white;
+        font-size: 18px;
+        font-weight: 500;
+        margin: 0;
+      }
+
+      mat-icon[mat-card-avatar] {
+        color: white;
+        background: transparent;
+        font-size: 24px;
+        width: 24px;
+        height: 24px;
       }
     }
+
+    mat-card-content {
+      padding: 24px;
+      background: #21253a;
+    }
+  }
+
+  .form-section {
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+
+      @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+      }
+
+      &:has(.toggle-label) {
+        grid-template-columns: 1fr;
+        align-items: center;
+      }
+    }
+
+    mat-form-field {
+      width: 100%;
+
+      &.mat-form-field-appearance-outline {
+        .mat-form-field-outline {
+          color: #e0e0e0;
+        }
+
+        &.mat-focused .mat-form-field-outline-thick {
+          color: #2381ce;
+        }
+
+        .mat-form-field-label {
+          color: #e9e9e9;
+        }
+
+        &.mat-focused .mat-form-field-label {
+          color: #2381ce;
+        }
+
+        .mat-mdc-input-element {
+          color: #e9e9e9;
+        }
+      }
+    }
+
+    .toggle-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #e9e9e9;
+      font-weight: 500;
+
+      mat-icon {
+        font-size: 20px;
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+
+  .actions-card {
+    background: #21253a;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-radius: 8px;
 
     .actions {
       display: flex;
       justify-content: flex-end;
-      gap: 8px;
-      margin-top: 24px;
+      gap: 12px;
+      padding: 8px 0;
+
+      button {
+        min-width: 120px;
+        
+        &[mat-button] {
+          color: #e9e9e9;
+          
+          mat-icon {
+            margin-right: 8px;
+          }
+        }
+
+        &[mat-raised-button] {
+          background: #2381ce;
+          color: white;
+          box-shadow: 0 2px 4px rgba(35, 129, 206, 0.3);
+
+          &:hover {
+            background: #1f548a;
+            box-shadow: 0 4px 8px rgba(35, 129, 206, 0.4);
+          }
+
+          &:disabled {
+            background: #e0e0e0;
+            color: #9e9e9e;
+            box-shadow: none;
+          }
+
+          mat-icon {
+            margin-right: 8px;
+          }
+        }
+      }
+
+      @media (max-width: 768px) {
+        flex-direction: column;
+
+        button {
+          width: 100%;
+        }
+      }
     }
+  }
+}
+
+/* Material Design color overrides */
+.mat-mdc-slide-toggle.mat-primary {
+  --mdc-switch-selected-track-color: #2381ce;
+  --mdc-switch-selected-handle-color: #2381ce;
+  --mdc-switch-selected-hover-track-color: #2381ce;
+  --mdc-switch-selected-hover-handle-color: #2381ce;
+  --mdc-switch-selected-pressed-track-color: #2381ce;
+  --mdc-switch-selected-pressed-handle-color: #2381ce;
+}
+
+.mat-mdc-progress-spinner {
+  --mdc-circular-progress-active-indicator-color: #2381ce;
+}

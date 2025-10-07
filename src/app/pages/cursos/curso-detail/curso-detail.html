@@ -1,0 +1,168 @@
+@if (curso()) {
+  <div class="curso-detail-container">
+    <mat-toolbar class="page-header">
+      <button mat-icon-button routerLink="/cursos" matTooltip="Voltar à lista">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <mat-icon>school</mat-icon>
+      <span class="page-title">{{ curso()?.nome }}</span>
+      <span class="spacer"></span>
+      @if (curso()?.ativo) {
+        <mat-chip color="accent" selected>
+          <mat-icon matChipAvatar>check_circle</mat-icon>
+          Ativo
+        </mat-chip>
+      } @else {
+        <mat-chip color="warn" selected>
+          <mat-icon matChipAvatar>block</mat-icon>
+          Inativo
+        </mat-chip>
+      }
+    </mat-toolbar>
+    
+    <div class="detail-grid">
+      <mat-card class="detail-section">
+        <mat-card-header>
+          <mat-icon mat-card-avatar>info</mat-icon>
+          <mat-card-title>Informações Básicas</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="info-grid">
+            <div class="info-item">
+              <mat-icon>tag</mat-icon>
+              <span class="label">Código:</span>
+              <span class="value">{{ curso()?.codigo }}</span>
+            </div>
+            
+            <div class="info-item">
+              <mat-icon>title</mat-icon>
+              <span class="label">Nome:</span>
+              <span class="value">{{ curso()?.nome }}</span>
+            </div>
+            
+            <div class="info-item full-width">
+              <mat-icon>description</mat-icon>
+              <span class="label">Descrição:</span>
+              <span class="value">{{ curso()?.descricao }}</span>
+            </div>
+            
+            <div class="info-item">
+              <mat-icon>person</mat-icon>
+              <span class="label">Coordenador:</span>
+              <span class="value">{{ curso()?.coordenador }}</span>
+            </div>
+            
+            <div class="info-item">
+              <mat-icon>category</mat-icon>
+              <span class="label">Área de Conhecimento:</span>
+              <span class="value">{{ curso()?.areaConhecimento }}</span>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="detail-section">
+        <mat-card-header>
+          <mat-icon mat-card-avatar>school</mat-icon>
+          <mat-card-title>Estrutura Acadêmica</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="info-grid">
+            <div class="info-item">
+              <mat-icon>computer</mat-icon>
+              <span class="label">Modalidade:</span>
+              <span class="value">{{ curso()?.modalidade }}</span>
+            </div>
+            
+            <div class="info-item">
+              <mat-icon>bookmark</mat-icon>
+              <span class="label">Nível:</span>
+              <span class="value">{{ curso()?.nivel }}</span>
+            </div>
+            
+            <div class="info-item">
+              <mat-icon>access_time</mat-icon>
+              <span class="label">Carga Horária:</span>
+              <span class="value highlight">{{ curso()?.cargaHoraria }} horas</span>
+            </div>
+            
+            <div class="info-item">
+              <mat-icon>schedule</mat-icon>
+              <span class="label">Duração:</span>
+              <span class="value highlight">{{ curso()?.duracaoMeses }} meses</span>
+            </div>
+            
+            <div class="info-item">
+              <mat-icon>view_module</mat-icon>
+              <span class="label">Módulos:</span>
+              <span class="value">{{ curso()?.quantidadeModulos }}</span>
+            </div>
+            
+            <div class="info-item">
+              <mat-icon>menu_book</mat-icon>
+              <span class="label">Disciplinas:</span>
+              <span class="value">{{ curso()?.quantidadeDisciplinas }}</span>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="detail-section">
+        <mat-card-header>
+          <mat-icon mat-card-avatar>attach_money</mat-icon>
+          <mat-card-title>Informações Financeiras e Vagas</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="info-grid">
+            <div class="info-item highlight-price">
+              <mat-icon>monetization_on</mat-icon>
+              <span class="label">Mensalidade:</span>
+              <span class="value price">{{ curso()?.valorMensalidade | currency:'BRL':'symbol':'1.2-2' }}</span>
+            </div>
+            
+            <div class="info-item">
+              <mat-icon>group</mat-icon>
+              <span class="label">Vagas Disponíveis:</span>
+              <span class="value">{{ curso()?.vagasDisponiveis }}</span>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="detail-section">
+        <mat-card-header>
+          <mat-icon mat-card-avatar>event</mat-icon>
+          <mat-card-title>Datas Importantes</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="info-grid">
+            <div class="info-item">
+              <mat-icon>play_arrow</mat-icon>
+              <span class="label">Data de Início:</span>
+              <span class="value">{{ curso()?.dataInicio | date:'dd/MM/yyyy' }}</span>
+            </div>
+            
+            <div class="info-item">
+              <mat-icon>add_circle</mat-icon>
+              <span class="label">Data de Criação:</span>
+              <span class="value">{{ curso()?.dataCriacao | date:'dd/MM/yyyy HH:mm' }}</span>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <mat-card class="actions-card">
+      <mat-card-actions align="end">
+        <button mat-button routerLink="/cursos" color="primary">
+          <mat-icon>arrow_back</mat-icon>
+          Voltar à Lista
+        </button>
+        <button mat-raised-button [routerLink]="['/cursos/edit', curso()?.id]" color="accent">
+          <mat-icon>edit</mat-icon>
+          Editar Curso
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+}

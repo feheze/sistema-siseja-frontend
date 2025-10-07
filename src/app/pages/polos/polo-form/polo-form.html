@@ -1,70 +1,158 @@
-  <div class="polo-form-container">
-      <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <h2>Novo Polo</h2>
+<div class="polo-form-container">
+  <mat-toolbar color="primary">
+    <mat-icon>add_location</mat-icon>
+    <span>Novo Polo</span>
+    <span class="spacer"></span>
+    <button mat-icon-button (click)="onCancel()" matTooltip="Voltar">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+  </mat-toolbar>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Nome</mat-label>
-          <input matInput formControlName="nome" required>
-          @if (form.get('nome')?.errors?.['required'] && form.get('nome')?.touched) {
-            <mat-error>Nome é obrigatório</mat-error>
-          }
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-          <mat-label>Endereço</mat-label>
-          <input matInput formControlName="endereco" required>
-          @if (form.get('endereco')?.errors?.['required'] && form.get('endereco')?.touched) {
-            <mat-error>Endereço é obrigatório</mat-error>
-          }
-        </mat-form-field>
-
-        <div class="form-row">
-          <mat-form-field appearance="outline">
-            <mat-label>Cidade</mat-label>
-            <input matInput formControlName="cidade" required>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline">
-            <mat-label>Estado</mat-label>
-            <input matInput formControlName="estado" required maxlength="2">
-          </mat-form-field>
-        </div>
-
-        <div class="form-row">
-          <mat-form-field appearance="outline">
-            <mat-label>CEP</mat-label>
-            <input matInput formControlName="cep" required>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline">
-            <mat-label>Telefone</mat-label>
-            <input matInput formControlName="telefone" required>
-          </mat-form-field>
-        </div>
-
-        <mat-form-field appearance="outline">
-          <mat-label>Email</mat-label>
-          <input matInput formControlName="email" required type="email">
-          @if (form.get('email')?.errors?.['email'] && form.get('email')?.touched) {
-            <mat-error>Email inválido</mat-error>
-          }
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-          <mat-label>Coordenador</mat-label>
-          <input matInput formControlName="coordenador" required>
-        </mat-form-field>
-
-        <mat-slide-toggle formControlName="ativo" color="primary">
-          Polo Ativo
-        </mat-slide-toggle>
-
-        <div class="actions">
-          <button mat-button type="button" (click)="onCancel()">Cancelar</button>
-          <button mat-raised-button color="primary" type="submit"
-                  [disabled]="!form.valid || loading()">
-            {{ loading() ? 'Salvando...' : 'Salvar' }}
-          </button>
-        </div>
-      </form>
+  @if (loading()) {
+    <div class="loading-container">
+      <mat-progress-spinner mode="indeterminate" />
+      <p>Processando...</p>
     </div>
+  } @else {
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <mat-card class="form-card">
+        <mat-card-header>
+          <mat-icon mat-card-avatar>location_city</mat-icon>
+          <mat-card-title>Informações Básicas</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="form-section">
+            <mat-form-field appearance="outline">
+              <mat-label>Nome do Polo</mat-label>
+              <input matInput formControlName="nome" required>
+              @if (form.get('nome')?.errors?.['required'] && form.get('nome')?.touched) {
+                <mat-error>Nome é obrigatório</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Coordenador</mat-label>
+              <input matInput formControlName="coordenador" required>
+              @if (form.get('coordenador')?.errors?.['required'] && form.get('coordenador')?.touched) {
+                <mat-error>Coordenador é obrigatório</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Capacidade Máxima</mat-label>
+              <input matInput formControlName="capacidadeMaxima" required type="number" min="1">
+              @if (form.get('capacidadeMaxima')?.errors?.['required'] && form.get('capacidadeMaxima')?.touched) {
+                <mat-error>Capacidade máxima é obrigatória</mat-error>
+              }
+              @if (form.get('capacidadeMaxima')?.errors?.['min'] && form.get('capacidadeMaxima')?.touched) {
+                <mat-error>Capacidade deve ser maior que 0</mat-error>
+              }
+            </mat-form-field>
+
+            <div class="form-row">
+              <mat-slide-toggle formControlName="ativo" color="primary">
+                <span class="toggle-label">
+                  <mat-icon>{{ form.get('ativo')?.value ? 'check_circle' : 'cancel' }}</mat-icon>
+                  Polo Ativo
+                </span>
+              </mat-slide-toggle>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="form-card">
+        <mat-card-header>
+          <mat-icon mat-card-avatar>place</mat-icon>
+          <mat-card-title>Endereço</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="form-section">
+            <mat-form-field appearance="outline">
+              <mat-label>Endereço Completo</mat-label>
+              <input matInput formControlName="endereco" required>
+              @if (form.get('endereco')?.errors?.['required'] && form.get('endereco')?.touched) {
+                <mat-error>Endereço é obrigatório</mat-error>
+              }
+            </mat-form-field>
+
+            <div class="form-row">
+              <mat-form-field appearance="outline">
+                <mat-label>Cidade</mat-label>
+                <input matInput formControlName="cidade" required>
+                @if (form.get('cidade')?.errors?.['required'] && form.get('cidade')?.touched) {
+                  <mat-error>Cidade é obrigatória</mat-error>
+                }
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Estado</mat-label>
+                <mat-select formControlName="estado" required>
+                  @for (estado of estados; track estado) {
+                    <mat-option [value]="estado">{{ estado }}</mat-option>
+                  }
+                </mat-select>
+                @if (form.get('estado')?.errors?.['required'] && form.get('estado')?.touched) {
+                  <mat-error>Estado é obrigatório</mat-error>
+                }
+              </mat-form-field>
+            </div>
+
+            <mat-form-field appearance="outline">
+              <mat-label>CEP</mat-label>
+              <input matInput formControlName="cep" required placeholder="00000-000">
+              @if (form.get('cep')?.errors?.['required'] && form.get('cep')?.touched) {
+                <mat-error>CEP é obrigatório</mat-error>
+              }
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="form-card">
+        <mat-card-header>
+          <mat-icon mat-card-avatar>contact_phone</mat-icon>
+          <mat-card-title>Contato</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="form-section">
+            <mat-form-field appearance="outline">
+              <mat-label>Telefone</mat-label>
+              <input matInput formControlName="telefone" required placeholder="(00) 0000-0000">
+              @if (form.get('telefone')?.errors?.['required'] && form.get('telefone')?.touched) {
+                <mat-error>Telefone é obrigatório</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Email</mat-label>
+              <input matInput formControlName="email" required type="email" placeholder="email@exemplo.com">
+              @if (form.get('email')?.errors?.['required'] && form.get('email')?.touched) {
+                <mat-error>Email é obrigatório</mat-error>
+              }
+              @if (form.get('email')?.errors?.['email'] && form.get('email')?.touched) {
+                <mat-error>Email inválido</mat-error>
+              }
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="actions-card">
+        <mat-card-content>
+          <div class="actions">
+            <button mat-button type="button" (click)="onCancel()">
+              <mat-icon>close</mat-icon>
+              Cancelar
+            </button>
+            <button mat-raised-button color="primary" type="submit"
+                    [disabled]="!form.valid || loading()">
+              <mat-icon>save</mat-icon>
+              {{ loading() ? 'Salvando...' : 'Salvar' }}
+            </button>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </form>
+  }
+</div>

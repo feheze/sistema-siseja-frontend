@@ -1,0 +1,209 @@
+/* Curso Form Styles - Material Design */
+.curso-form-container {
+  padding: 24px;
+  background-color: #070214c7;
+  min-height: 100vh;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.page-header {
+  background: linear-gradient(135deg, #1f548a 0%, #2381ce 100%);
+  color: white;
+  margin-bottom: 24px;
+  border-radius: 4px;
+  
+  .page-title {
+    margin-left: 16px;
+    font-size: 24px;
+    font-weight: 500;
+  }
+}
+
+.form-section {
+  margin-bottom: 24px;
+  transition: transform 0.2s ease-in-out;
+  background: #21253a;
+  
+  &:hover {
+    transform: translateY(-2px);
+  }
+  
+  mat-card-header {
+    mat-icon[mat-card-avatar] {
+      background-color: rgba(31, 84, 138, 0.2);
+      color: #2381ce;
+    }
+    
+    mat-card-title {
+      color: #e9e9e9;
+      font-weight: 500;
+    }
+  }
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+  
+  mat-form-field {
+    flex: 1;
+  }
+}
+
+mat-form-field {
+  width: 100%;
+  margin-bottom: 16px;
+  
+  &.full-width {
+    width: 100%;
+  }
+  
+  mat-icon[matPrefix] {
+    color: #2381ce;
+    margin-right: 8px;
+  }
+  
+  // Enhanced outline appearance
+  &.mat-mdc-form-field.mat-form-field-appearance-outline {
+    .mdc-notched-outline__leading,
+    .mdc-notched-outline__notch,
+    .mdc-notched-outline__trailing {
+      border-color: #e0e0e0;
+    }
+
+    .mat-mdc-form-field-input-control {
+      color: #e9e9e9;
+    }
+
+    .mat-mdc-floating-label {
+      color: #e9e9e9;
+    }
+    
+    &.mat-focused {
+      .mdc-notched-outline__leading,
+      .mdc-notched-outline__notch,
+      .mdc-notched-outline__trailing {
+        border-color: #2381ce;
+        border-width: 2px;
+      }
+
+      .mat-mdc-floating-label {
+        color: #2381ce;
+      }
+    }
+    
+    &:hover:not(.mat-focused) {
+      .mdc-notched-outline__leading,
+      .mdc-notched-outline__notch,
+      .mdc-notched-outline__trailing {
+        border-color: #2381ce;
+      }
+    }
+  }
+}
+
+.toggle-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background-color: rgba(31, 84, 138, 0.1);
+  border-radius: 8px;
+  margin-top: 16px;
+  
+  .toggle-label {
+    color: #e9e9e9;
+    font-weight: 500;
+  }
+  
+  mat-slide-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    
+    mat-icon {
+      color: #4caf50;
+    }
+  }
+}
+
+.actions-card {
+  background: #21253a;
+  
+  mat-card-actions {
+    padding: 16px 24px;
+    
+    button {
+      margin-right: 8px;
+      
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .curso-form-container {
+    padding: 16px;
+  }
+  
+  .form-row {
+    flex-direction: column;
+  }
+  
+  .page-header {
+    .page-title {
+      font-size: 20px;
+    }
+  }
+}
+
+/* Material Design Color Enhancements */
+.mat-mdc-raised-button.mat-primary {
+  --mdc-protected-button-container-color: #2381ce;
+  --mdc-protected-button-label-text-color: white;
+  
+  &:hover {
+    --mdc-protected-button-container-color: #1f548a;
+  }
+  
+  &[disabled] {
+    --mdc-protected-button-container-color: #e0e0e0;
+    --mdc-protected-button-label-text-color: #9e9e9e;
+  }
+}
+
+.mat-mdc-button.mat-primary {
+  --mdc-text-button-label-text-color: #2381ce;
+  
+  &:hover {
+    background-color: rgba(35, 129, 206, 0.04);
+  }
+}
+
+.mat-mdc-slide-toggle.mat-primary {
+  --mdc-switch-selected-track-color: #2381ce;
+  --mdc-switch-selected-handle-color: #2381ce;
+  --mdc-switch-selected-hover-handle-color: #1f548a;
+  --mdc-switch-selected-pressed-handle-color: #1f548a;
+}
+
+/* Form Field Validation States */
+.mat-mdc-form-field.mat-form-field-invalid {
+  .mdc-notched-outline__leading,
+  .mdc-notched-outline__notch,
+  .mdc-notched-outline__trailing {
+    border-color: #f44336;
+  }
+}
+
+.mat-mdc-form-field.mat-form-field-valid.mat-focused {
+  .mdc-notched-outline__leading,
+  .mdc-notched-outline__notch,
+  .mdc-notched-outline__trailing {
+    border-color: #4caf50;
+  }
+}

@@ -1,0 +1,181 @@
+<div class="curso-list-container">
+  <mat-toolbar class="page-header">
+    <mat-icon>school</mat-icon>
+    <span class="page-title">Lista de Cursos</span>
+  </mat-toolbar>
+  
+  <!-- Filtros -->
+  <mat-card class="filter-card">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>filter_list</mat-icon>
+        Filtros
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="filter-actions">
+        <button mat-raised-button color="primary" (click)="loadAllCursos()"
+                [class.active-filter]="filterType() === 'all'">
+          <mat-icon>list</mat-icon>
+          Todos os Cursos
+        </button>
+        
+        <button mat-raised-button color="accent" (click)="loadActiveCursos()"
+                [class.active-filter]="filterType() === 'active'">
+          <mat-icon>check_circle</mat-icon>
+          Apenas Ativos
+        </button>
+        
+        <form [formGroup]="filterForm" class="filter-form">
+          <mat-form-field appearance="outline">
+            <mat-label>Filtrar por Modalidade</mat-label>
+            <mat-select formControlName="modalidade">
+              @for (modalidade of modalidades; track modalidade) {
+                <mat-option [value]="modalidade">{{ modalidade }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+          
+          <button mat-stroked-button color="primary" type="button" (click)="loadCursosByModalidade()"
+                  [disabled]="!filterForm.get('modalidade')?.value">
+            <mat-icon>filter_list</mat-icon>
+            Por Modalidade
+          </button>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Filtrar por Nível</mat-label>
+            <mat-select formControlName="nivel">
+              @for (nivel of niveis; track nivel) {
+                <mat-option [value]="nivel">{{ nivel }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+          
+          <button mat-stroked-button color="primary" type="button" (click)="loadCursosByNivel()"
+                  [disabled]="!filterForm.get('nivel')?.value">
+            <mat-icon>school</mat-icon>
+            Por Nível
+          </button>
+        </form>
+      </div>
+      
+      <!-- Current filter indicator -->
+      <div class="filter-indicators">
+        @if (filterType() === 'active') {
+          <mat-chip-set>
+            <mat-chip color="accent" selected>
+              <mat-icon matChipAvatar>check_circle</mat-icon>
+              Exibindo apenas cursos ativos
+            </mat-chip>
+          </mat-chip-set>
+        }
+        @if (filterType() === 'byModalidade') {
+          <mat-chip-set>
+            <mat-chip color="primary" selected>
+              <mat-icon matChipAvatar>filter_list</mat-icon>
+              Modalidade: {{ filterForm.get('modalidade')?.value }}
+            </mat-chip>
+          </mat-chip-set>
+        }
+        @if (filterType() === 'byNivel') {
+          <mat-chip-set>
+            <mat-chip color="primary" selected>
+              <mat-icon matChipAvatar>school</mat-icon>
+              Nível: {{ filterForm.get('nivel')?.value }}
+            </mat-chip>
+          </mat-chip-set>
+        }
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Exibindo a lista de cursos -->
+  @if (cursos().length > 0) {
+    <div class="curso-grid">
+      @for (curso of cursos(); track curso.id) {
+        <mat-card class="curso-card" [class.inactive-course]="!curso.ativo">
+          <mat-card-header>
+            <mat-icon mat-card-avatar>school</mat-icon>
+            <mat-card-title>{{ curso.nome }}</mat-card-title>
+            <mat-card-subtitle>{{ curso.codigo }} - {{ curso.modalidade }}</mat-card-subtitle>
+            @if (!curso.ativo) {
+              <mat-icon class="status-icon inactive" matTooltip="Curso Inativo">block</mat-icon>
+            } @else {
+              <mat-icon class="status-icon active" matTooltip="Curso Ativo">check_circle</mat-icon>
+            }
+          </mat-card-header>
+
+          <mat-card-content>
+            <div class="course-details">
+              <div class="detail-item">
+                <mat-icon>person</mat-icon>
+                <span class="label">Coordenador:</span>
+                <span class="value">{{ curso.coordenador }}</span>
+              </div>
+              
+              <div class="detail-item">
+                <mat-icon>bookmark</mat-icon>
+                <span class="label">Nível:</span>
+                <span class="value">{{ curso.nivel }}</span>
+              </div>
+              
+              <div class="detail-item">
+                <mat-icon>schedule</mat-icon>
+                <span class="label">Duração:</span>
+                <span class="value">{{ curso.duracaoMeses }} meses</span>
+              </div>
+              
+              <div class="detail-item">
+                <mat-icon>access_time</mat-icon>
+                <span class="label">Carga Horária:</span>
+                <span class="value">{{ curso.cargaHoraria }}h</span>
+              </div>
+              
+              <div class="detail-item highlight">
+                <mat-icon>attach_money</mat-icon>
+                <span class="label">Mensalidade:</span>
+                <span class="value price">{{ curso.valorMensalidade | currency:'BRL':'symbol':'1.2-2' }}</span>
+              </div>
+              
+              <div class="detail-item">
+                <mat-icon>group</mat-icon>
+                <span class="label">Vagas:</span>
+                <span class="value">{{ curso.vagasDisponiveis }}</span>
+              </div>
+            </div>
+          </mat-card-content>
+
+          <mat-card-actions align="end">
+            <a mat-button color="primary" [routerLink]="['/cursos', curso.id]">
+              <mat-icon>info</mat-icon>
+              Detalhes
+            </a>
+            <a mat-button color="accent" [routerLink]="['/cursos/edit', curso.id]">
+              <mat-icon>edit</mat-icon>
+              Editar
+            </a>
+            <button mat-button color="warn" (click)="deleteCurso(curso.id)">
+              <mat-icon>delete</mat-icon>
+              Excluir
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      }
+    </div>
+    
+  } @else {
+    <mat-card class="empty-state">
+      <mat-card-content>
+        <div class="empty-content">
+          <mat-icon>search_off</mat-icon>
+          <h2>Nenhum Curso Encontrado</h2>
+          <p>Os cursos cadastrados serão exibidos aqui.</p>
+          <button mat-raised-button color="primary" routerLink="/cursos/new">
+            <mat-icon>add</mat-icon>
+            Cadastrar Primeiro Curso
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  }
+</div>

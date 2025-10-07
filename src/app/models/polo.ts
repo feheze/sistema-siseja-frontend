@@ -8,6 +8,7 @@ export interface Polo {
   telefone: string;
   email: string;
   coordenador: string;
+  capacidadeMaxima: number;
   ativo: boolean;
   dataCriacao: Date;
 }

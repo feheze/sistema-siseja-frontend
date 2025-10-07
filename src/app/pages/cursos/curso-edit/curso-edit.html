@@ -1,0 +1,229 @@
+<div class="curso-edit-container">
+  <mat-toolbar color="primary">
+    <mat-icon>edit</mat-icon>
+    <span>Editar Curso</span>
+    <span class="spacer"></span>
+    <button mat-icon-button (click)="onCancel()" matTooltip="Voltar">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+  </mat-toolbar>
+
+  @if (loading()) {
+    <div class="loading-container">
+      <mat-progress-spinner mode="indeterminate" />
+      <p>Carregando curso...</p>
+    </div>
+  } @else if (error()) {
+    <mat-card class="error-card">
+      <mat-card-content>
+        <mat-icon color="warn">error</mat-icon>
+        <p>{{ error() }}</p>
+      </mat-card-content>
+    </mat-card>
+  } @else {
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <mat-card class="form-card">
+        <mat-card-header>
+          <mat-icon mat-card-avatar>school</mat-icon>
+          <mat-card-title>Informações Básicas</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="form-section">
+            <div class="form-row">
+              <mat-form-field appearance="outline">
+                <mat-label>Nome do Curso</mat-label>
+                <input matInput formControlName="nome" required>
+                @if (form.get('nome')?.errors?.['required'] && form.get('nome')?.touched) {
+                  <mat-error>Nome é obrigatório</mat-error>
+                }
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Código do Curso</mat-label>
+                <input matInput formControlName="codigo" required>
+                @if (form.get('codigo')?.errors?.['required'] && form.get('codigo')?.touched) {
+                  <mat-error>Código é obrigatório</mat-error>
+                }
+              </mat-form-field>
+            </div>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Descrição</mat-label>
+              <textarea matInput formControlName="descricao" required rows="3"></textarea>
+              @if (form.get('descricao')?.errors?.['required'] && form.get('descricao')?.touched) {
+                <mat-error>Descrição é obrigatória</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Coordenador</mat-label>
+              <input matInput formControlName="coordenador" required>
+              @if (form.get('coordenador')?.errors?.['required'] && form.get('coordenador')?.touched) {
+                <mat-error>Coordenador é obrigatório</mat-error>
+              }
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="form-card">
+        <mat-card-header>
+          <mat-icon mat-card-avatar>library_books</mat-icon>
+          <mat-card-title>Estrutura Acadêmica</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="form-section">
+            <div class="form-row">
+              <mat-form-field appearance="outline">
+                <mat-label>Modalidade</mat-label>
+                <mat-select formControlName="modalidade" required>
+                  @for (modalidade of modalidades; track modalidade) {
+                    <mat-option [value]="modalidade">{{ modalidade }}</mat-option>
+                  }
+                </mat-select>
+                @if (form.get('modalidade')?.errors?.['required'] && form.get('modalidade')?.touched) {
+                  <mat-error>Modalidade é obrigatória</mat-error>
+                }
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Nível</mat-label>
+                <mat-select formControlName="nivel" required>
+                  @for (nivel of niveis; track nivel) {
+                    <mat-option [value]="nivel">{{ nivel }}</mat-option>
+                  }
+                </mat-select>
+                @if (form.get('nivel')?.errors?.['required'] && form.get('nivel')?.touched) {
+                  <mat-error>Nível é obrigatório</mat-error>
+                }
+              </mat-form-field>
+            </div>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Área de Conhecimento</mat-label>
+              <mat-select formControlName="areaConhecimento" required>
+                @for (area of areasConhecimento; track area) {
+                  <mat-option [value]="area">{{ area }}</mat-option>
+                }
+              </mat-select>
+              @if (form.get('areaConhecimento')?.errors?.['required'] && form.get('areaConhecimento')?.touched) {
+                <mat-error>Área de conhecimento é obrigatória</mat-error>
+              }
+            </mat-form-field>
+
+            <div class="form-row">
+              <mat-form-field appearance="outline">
+                <mat-label>Carga Horária</mat-label>
+                <input matInput formControlName="cargaHoraria" required type="number" min="1">
+                @if (form.get('cargaHoraria')?.errors?.['required'] && form.get('cargaHoraria')?.touched) {
+                  <mat-error>Carga horária é obrigatória</mat-error>
+                }
+                @if (form.get('cargaHoraria')?.errors?.['min'] && form.get('cargaHoraria')?.touched) {
+                  <mat-error>Carga horária deve ser maior que 0</mat-error>
+                }
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Duração (meses)</mat-label>
+                <input matInput formControlName="duracaoMeses" required type="number" min="1">
+                @if (form.get('duracaoMeses')?.errors?.['required'] && form.get('duracaoMeses')?.touched) {
+                  <mat-error>Duração é obrigatória</mat-error>
+                }
+                @if (form.get('duracaoMeses')?.errors?.['min'] && form.get('duracaoMeses')?.touched) {
+                  <mat-error>Duração deve ser maior que 0</mat-error>
+                }
+              </mat-form-field>
+            </div>
+
+            <div class="form-row">
+              <mat-form-field appearance="outline">
+                <mat-label>Quantidade de Módulos</mat-label>
+                <input matInput formControlName="quantidadeModulos" required type="number" min="1">
+                @if (form.get('quantidadeModulos')?.errors?.['min'] && form.get('quantidadeModulos')?.touched) {
+                  <mat-error>Deve ter pelo menos 1 módulo</mat-error>
+                }
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Quantidade de Disciplinas</mat-label>
+                <input matInput formControlName="quantidadeDisciplinas" required type="number" min="1">
+                @if (form.get('quantidadeDisciplinas')?.errors?.['min'] && form.get('quantidadeDisciplinas')?.touched) {
+                  <mat-error>Deve ter pelo menos 1 disciplina</mat-error>
+                }
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="form-card">
+        <mat-card-header>
+          <mat-icon mat-card-avatar>attach_money</mat-icon>
+          <mat-card-title>Informações Financeiras e Vagas</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="form-section">
+            <div class="form-row">
+              <mat-form-field appearance="outline">
+                <mat-label>Valor da Mensalidade</mat-label>
+                <input matInput formControlName="valorMensalidade" required type="number" min="0" step="0.01">
+                @if (form.get('valorMensalidade')?.errors?.['required'] && form.get('valorMensalidade')?.touched) {
+                  <mat-error>Valor da mensalidade é obrigatório</mat-error>
+                }
+                @if (form.get('valorMensalidade')?.errors?.['min'] && form.get('valorMensalidade')?.touched) {
+                  <mat-error>Valor deve ser maior ou igual a 0</mat-error>
+                }
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Vagas Disponíveis</mat-label>
+                <input matInput formControlName="vagasDisponiveis" required type="number" min="1">
+                @if (form.get('vagasDisponiveis')?.errors?.['required'] && form.get('vagasDisponiveis')?.touched) {
+                  <mat-error>Vagas disponíveis é obrigatório</mat-error>
+                }
+                @if (form.get('vagasDisponiveis')?.errors?.['min'] && form.get('vagasDisponiveis')?.touched) {
+                  <mat-error>Deve ter pelo menos 1 vaga</mat-error>
+                }
+              </mat-form-field>
+            </div>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Data de Início</mat-label>
+              <input matInput [matDatepicker]="picker" formControlName="dataInicio" required>
+              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+              @if (form.get('dataInicio')?.errors?.['required'] && form.get('dataInicio')?.touched) {
+                <mat-error>Data de início é obrigatória</mat-error>
+              }
+            </mat-form-field>
+
+            <div class="form-row">
+              <mat-slide-toggle formControlName="ativo" color="primary">
+                <span class="toggle-label">
+                  <mat-icon>{{ form.get('ativo')?.value ? 'check_circle' : 'cancel' }}</mat-icon>
+                  Curso Ativo
+                </span>
+              </mat-slide-toggle>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="actions-card">
+        <mat-card-content>
+          <div class="actions">
+            <button mat-button type="button" (click)="onCancel()">
+              <mat-icon>close</mat-icon>
+              Cancelar
+            </button>
+            <button mat-raised-button color="primary" type="submit"
+                    [disabled]="!form.valid || loading()">
+              <mat-icon>save</mat-icon>
+              {{ loading() ? 'Salvando...' : 'Salvar' }}
+            </button>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </form>
+  }
+</div>

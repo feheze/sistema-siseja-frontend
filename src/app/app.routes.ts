@@ -6,6 +6,10 @@ export const routesAll: Routes = [
     loadChildren: () => import('./pages/polos/polos.routes').then(m => m.polosRoutes)
   },
   {
+    path: 'cursos',
+    loadChildren: () => import('./pages/cursos/cursos.routes').then(m => m.cursosRoutes)
+  },
+  {
     path: 'dashboard',
     loadChildren: () => import('./pages/dashboard/dashboard.routes').then(m => m.dashboardRoutes)
   },

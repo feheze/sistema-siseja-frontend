@@ -7,17 +7,22 @@ import {
 } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { CommonModule } from '@angular/common';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { PoloService } from '../../../services/polo';
 import { CreatePoloDTO, Polo } from '../../../models/polo';
 import { EMPTY, catchError, finalize, switchMap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-polo-edit',
@@ -32,7 +37,12 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
     MatButtonModule,
     MatSlideToggleModule,
     MatProgressSpinnerModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatSelectModule,
+    MatCardModule,
+    MatIconModule,
+    MatToolbarModule,
+    MatTooltipModule
   ]
 })
 export class PoloEditComponent {
@@ -41,25 +51,32 @@ export class PoloEditComponent {
   private readonly route = inject(ActivatedRoute);
   private readonly fb = inject(FormBuilder);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly snackBar = inject(MatSnackBar);
 
   readonly loading = signal(false);
   readonly error = signal<string | null>(null);
   readonly polo = signal<Polo | null>(null);
 
-readonly form = this.fb.nonNullable.group({
+  readonly estados = [
+    'AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA',
+    'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN',
+    'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'
+  ];
+
+  readonly form = this.fb.nonNullable.group({
     nome: ['', [Validators.required]],
     endereco: ['', [Validators.required]],
     cidade: ['', [Validators.required]],
-    estado: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(2)]],
+    estado: ['', [Validators.required]],
     cep: ['', [Validators.required]],
     telefone: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]],
     coordenador: ['', [Validators.required]],
-    ativo: true
+    capacidadeMaxima: [0, [Validators.required, Validators.min(1)]],
+    ativo: [true]
   });
 
-
-  constructor(private snackBar: MatSnackBar ) {
+  constructor() {
     this.loadPolo();
   }
 
@@ -89,24 +106,24 @@ readonly form = this.fb.nonNullable.group({
     });
   }
 
-private getChangedFields(formValue: CreatePoloDTO, originalPolo: Polo): Partial<CreatePoloDTO> {
-  type FormFields = keyof CreatePoloDTO;
-  
-  return (Object.keys(formValue) as FormFields[]).reduce((changes, key) => {
-    const newValue = formValue[key];
-    const originalValue = originalPolo[key];
+  private getChangedFields(formValue: CreatePoloDTO, originalPolo: Polo): Partial<CreatePoloDTO> {
+    type FormFields = keyof CreatePoloDTO;
+    
+    return (Object.keys(formValue) as FormFields[]).reduce((changes, key) => {
+      const newValue = formValue[key];
+      const originalValue = originalPolo[key];
 
-    //if (newValue !== originalValue) {
       if (key === 'ativo') {
-        changes[key] = Boolean(newValue);
+        (changes as any)[key] = Boolean(newValue);
+      } else if (key === 'capacidadeMaxima') {
+        (changes as any)[key] = Number(newValue);
       } else {
-        changes[key] = String(newValue) as CreatePoloDTO[typeof key];
+        (changes as any)[key] = String(newValue);
       }
-    //}
 
-    return changes;
-  }, {} as Partial<CreatePoloDTO>);
-}
+      return changes;
+    }, {} as Partial<CreatePoloDTO>);
+  }
 
   onSubmit(): void {
     if (this.form.invalid) return;
@@ -133,10 +150,10 @@ private getChangedFields(formValue: CreatePoloDTO, originalPolo: Polo): Partial<
       finalize(() => this.loading.set(false))
     ).subscribe(() => {
       this.snackBar.open('Alteração realizada com sucesso!', 'Sucesso', {
-        duration: 3000, // Duration in milliseconds
-        verticalPosition: 'top', // 'top' or 'bottom'
-        horizontalPosition: 'center', // 'start', 'center', 'end', 'left', 'right'
-        panelClass: ['snackbar-success'] // Custom CSS class for styling
+        duration: 3000,
+        verticalPosition: 'top',
+        horizontalPosition: 'center',
+        panelClass: ['snackbar-success']
       });
       this.router.navigate(['/polos']);
     });
@@ -146,11 +163,15 @@ private getChangedFields(formValue: CreatePoloDTO, originalPolo: Polo): Partial<
     this.router.navigate(['/polos']);
   }
 
-  handleError(message: string): void {
+  reloadPolo(): void {
+    this.loadPolo();
+  }
+
+  private handleError(message: string): void {
     this.snackBar.open(message, 'Falha', {
-      duration: 3000, // Duration in milliseconds
-      verticalPosition: 'top', // 'top' or 'bottom'
-      horizontalPosition: 'center', // 'start', 'center', 'end', 'left', 'right'
+      duration: 3000,
+      verticalPosition: 'top',
+      horizontalPosition: 'center',
     });
     this.error.set(message);
     this.loading.set(false);

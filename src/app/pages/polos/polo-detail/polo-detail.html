@@ -1,14 +1,172 @@
-@if (polo()) {
-  <div>
-    <h2>Detalhes do Polo: {{ polo()?.nome }}</h2>
-    <p><strong>Endereço:</strong> {{ polo()?.endereco }}</p>
-    <p><strong>Cidade:</strong> {{ polo()?.cidade }}</p>
-    <p><strong>Estado:</strong> {{ polo()?.estado }}</p>
-    <p><strong>CEP:</strong> {{ polo()?.cep }}</p>
-    <p><strong>Telefone:</strong> {{ polo()?.telefone }}</p>
-    <p><strong>Email:</strong> {{ polo()?.email }}</p>
-    <p><strong>Coordenador:</strong> {{ polo()?.coordenador }}</p>
-    <p><strong>Ativo:</strong> {{ polo()?.ativo ? 'Sim' : 'Não' }}</p>
-    <p><strong>Data de Criação:</strong> {{ polo()?.dataCriacao | date }}</p>
-  </div>
-}
+<div class="polo-detail-container">
+  <mat-toolbar color="primary">
+    <mat-icon>location_city</mat-icon>
+    <span>Detalhes do Polo</span>
+    <span class="spacer"></span>
+    <button mat-icon-button routerLink="/polos" matTooltip="Voltar para Lista">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+  </mat-toolbar>
+
+  @if (loading()) {
+    <div class="loading-container">
+      <mat-progress-spinner mode="indeterminate" />
+      <p>Carregando detalhes do polo...</p>
+    </div>
+  } @else if (error()) {
+    <mat-card class="error-card">
+      <mat-card-content>
+        <mat-icon color="warn">error</mat-icon>
+        <p>{{ error() }}</p>
+        <button mat-raised-button color="primary" (click)="loadPolo(poloId())">
+          <mat-icon>refresh</mat-icon>
+          Tentar Novamente
+        </button>
+      </mat-card-content>
+    </mat-card>
+  } @else if (polo()) {
+    <div class="polo-content">
+      <!-- Header do Polo -->
+      <mat-card class="polo-header-card">
+        <mat-card-header>
+          <mat-icon mat-card-avatar [class.inactive-icon]="!polo()?.ativo">
+            {{ polo()?.ativo ? 'location_city' : 'location_off' }}
+          </mat-icon>
+          <mat-card-title>{{ polo()?.nome }}</mat-card-title>
+          <mat-card-subtitle>
+            <div class="status-badge" [class.active]="polo()?.ativo" [class.inactive]="!polo()?.ativo">
+              <mat-icon>{{ polo()?.ativo ? 'check_circle' : 'cancel' }}</mat-icon>
+              {{ polo()?.ativo ? 'Ativo' : 'Inativo' }}
+            </div>
+          </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-actions>
+          <button mat-raised-button color="accent" [routerLink]="['/polos/edit', polo()?.id]">
+            <mat-icon>edit</mat-icon>
+            Editar Polo
+          </button>
+        </mat-card-actions>
+      </mat-card>
+
+      <!-- Informações Detalhadas -->
+      <div class="details-grid">
+        <!-- Informações Básicas -->
+        <mat-card class="info-card">
+          <mat-card-header>
+            <mat-icon mat-card-avatar>info</mat-icon>
+            <mat-card-title>Informações Básicas</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="info-list">
+              <div class="info-item">
+                <mat-icon>person</mat-icon>
+                <div>
+                  <strong>Coordenador</strong>
+                  <span>{{ polo()?.coordenador }}</span>
+                </div>
+              </div>
+              <div class="info-item">
+                <mat-icon>groups</mat-icon>
+                <div>
+                  <strong>Capacidade Máxima</strong>
+                  <span>{{ polo()?.capacidadeMaxima }} alunos</span>
+                </div>
+              </div>
+              <div class="info-item">
+                <mat-icon>event</mat-icon>
+                <div>
+                  <strong>Data de Criação</strong>
+                  <span>{{ polo()?.dataCriacao | date:'dd/MM/yyyy' }}</span>
+                </div>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+
+        <!-- Endereço -->
+        <mat-card class="info-card">
+          <mat-card-header>
+            <mat-icon mat-card-avatar>place</mat-icon>
+            <mat-card-title>Endereço</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="info-list">
+              <div class="info-item">
+                <mat-icon>home</mat-icon>
+                <div>
+                  <strong>Endereço</strong>
+                  <span>{{ polo()?.endereco }}</span>
+                </div>
+              </div>
+              <div class="info-item">
+                <mat-icon>location_city</mat-icon>
+                <div>
+                  <strong>Cidade</strong>
+                  <span>{{ polo()?.cidade }}</span>
+                </div>
+              </div>
+              <div class="info-item">
+                <mat-icon>map</mat-icon>
+                <div>
+                  <strong>Estado</strong>
+                  <span>{{ polo()?.estado }}</span>
+                </div>
+              </div>
+              <div class="info-item">
+                <mat-icon>local_post_office</mat-icon>
+                <div>
+                  <strong>CEP</strong>
+                  <span>{{ polo()?.cep }}</span>
+                </div>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+
+        <!-- Contato -->
+        <mat-card class="info-card">
+          <mat-card-header>
+            <mat-icon mat-card-avatar>contact_phone</mat-icon>
+            <mat-card-title>Contato</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="info-list">
+              <div class="info-item">
+                <mat-icon>phone</mat-icon>
+                <div>
+                  <strong>Telefone</strong>
+                  <span>
+                    <a href="tel:{{ polo()?.telefone }}">{{ polo()?.telefone }}</a>
+                  </span>
+                </div>
+              </div>
+              <div class="info-item">
+                <mat-icon>email</mat-icon>
+                <div>
+                  <strong>Email</strong>
+                  <span>
+                    <a href="mailto:{{ polo()?.email }}">{{ polo()?.email }}</a>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  } @else {
+    <mat-card class="not-found-card">
+      <mat-card-content>
+        <div class="not-found-content">
+          <mat-icon>location_off</mat-icon>
+          <h2>Polo não encontrado</h2>
+          <p>O polo solicitado não foi encontrado ou não existe.</p>
+          <button mat-raised-button color="primary" routerLink="/polos">
+            <mat-icon>list</mat-icon>
+            Voltar para Lista
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  }
+</div>
