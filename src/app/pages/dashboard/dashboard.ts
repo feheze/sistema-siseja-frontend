@@ -27,7 +27,7 @@ import { DashboardMetrics, CoursePerformance } from '../../models/dashboard';
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.scss']
 })
-export class DashboardComponent implements OnInit {
+export class Dashboard implements OnInit {
   metrics$!: Observable<DashboardMetrics>;
   recentActivities$!: Observable<RecentActivityPt[]>;
   coursePerformance$!: Observable<CoursePerformance[]>;

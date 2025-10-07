@@ -45,7 +45,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     MatTooltipModule
   ]
 })
-export class PoloEditComponent {
+export class PoloEdit {
   private readonly poloService = inject(PoloService);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
