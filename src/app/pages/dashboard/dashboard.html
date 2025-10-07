@@ -1,0 +1,104 @@
+<div class="dashboard-container">
+  <div class="header">
+    <h1>Painel de Controle</h1>
+    <p class="subtitle">Visão geral das principais métricas e atividades recentes</p>
+  </div>
+
+  <!-- Métricas Principais -->
+  <ng-container *ngIf="metrics$ | async as metrics">
+    <div class="metrics-grid">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Total de Alunos</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p class="metric-value">{{ metrics.totalStudents | number }}</p>
+        </mat-card-content>
+      </mat-card>
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Cursos Ativos</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p class="metric-value">{{ metrics.activeCourses }}</p>
+        </mat-card-content>
+      </mat-card>
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Certificados Emitidos</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p class="metric-value">{{ metrics.certificatesIssued | number }}</p>
+        </mat-card-content>
+      </mat-card>
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Novas Matrículas (30d)</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p class="metric-value">{{ metrics.newEnrollments }}</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </ng-container>
+
+  <!-- Seção de Atividades e Performance -->
+  <div class="content-grid">
+    <!-- Atividades Recentes -->
+    <mat-card class="span-2">
+      <mat-card-header>
+        <mat-card-title>Atividades Recentes</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <table mat-table [dataSource]="recentActivities$" class="mat-elevation-z0">
+          <!-- Colunas da Tabela -->
+          <ng-container matColumnDef="studentName">
+            <th mat-header-cell *matHeaderCellDef>Nome do Aluno</th>
+            <td mat-cell *matCellDef="let element">{{ element.studentName }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="course">
+            <th mat-header-cell *matHeaderCellDef>Curso</th>
+            <td mat-cell *matCellDef="let element">{{ element.course }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="enrollmentDate">
+            <th mat-header-cell *matHeaderCellDef>Data da Matrícula</th>
+            <td mat-cell *matCellDef="let element">{{ element.enrollmentDate | date:'dd/MM/yyyy' }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef>Status</th>
+            <td mat-cell *matCellDef="let element">
+              <mat-chip-listbox>
+                <mat-chip [color]="statusColors[element.status]" selected>{{ element.status }}</mat-chip>
+              </mat-chip-listbox>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Performance dos Cursos -->
+    <mat-card *ngIf="coursePerformance$ | async as performance">
+      <mat-card-header>
+        <mat-card-title>Taxas de Conclusão dos Alunos</mat-card-title>
+        <mat-card-subtitle>Geral: 85% <span class="positive-change">+5%</span></mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="performance-list">
+          <div *ngFor="let course of performance" class="performance-item">
+            <div class="course-info">
+              <span>{{ course.courseName }}</span>
+              <span>{{ course.completionRate }}%</span>
+            </div>
+            <mat-progress-bar mode="determinate" [value]="course.completionRate"></mat-progress-bar>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

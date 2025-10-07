@@ -24,17 +24,27 @@
             <div class="text-sm text-gray-600 space-y-1">
               <p><span class="font-medium text-gray-700">ID:</span> {{ polo.id }}</p>
               <!-- Adicione mais detalhes da entidade Polo aqui -->
-              <p><span class="font-medium text-gray-700">Coordenador:</span> [Nome do Coordenador]</p>
+              <p><span class="font-medium text-gray-700">Coordenador:</span> {{ polo.coordenador }}</p>
             </div>
           </mat-card-content>
 
-          <mat-card-actions class="flex justify-end pt-4">
-            <!-- Botão de Detalhes -->
-            <a mat-button color="primary" [routerLink]="['/polos', polo.id]">
-              <mat-icon>info</mat-icon>
-              Ver Detalhes
-            </a>
-          </mat-card-actions>
+            <mat-card-actions class="flex justify-end gap-2 pt-4">
+              <!-- Botão de Detalhes -->
+              <a mat-button color="primary" [routerLink]="['/polos', polo.id]">
+                <mat-icon>info</mat-icon>
+                Ver Detalhes
+              </a>
+              <!-- Botão de Alterar -->
+              <a mat-button color="accent" [routerLink]="['/polos/edit', polo.id]">
+                <mat-icon>edit</mat-icon>
+                Alterar
+              </a>
+              <!-- Botão de Deletar -->
+              <button mat-button color="warn" >
+                <mat-icon>delete</mat-icon>
+                Deletar
+              </button>
+            </mat-card-actions>
           
         </mat-card>
       }

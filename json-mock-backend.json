@@ -1,0 +1,59 @@
+{
+  "polos": [
+    {
+      "nome": "Jose Vieira I",
+      "endereco": "Av padre joao",
+      "cidade": "sao paulo",
+      "estado": "Sp",
+      "cep": "17120213",
+      "telefone": "115554654",
+      "email": "feheze@gmail.com",
+      "coordenador": "Gean ANTONIO",
+      "ativo": true,
+      "id": "1"
+    },
+    {
+      "coordenador": "João Souza Lima",
+      "id": "2"
+    },
+    {
+      "id": "3",
+      "nome": "Polo Sul",
+      "endereco": "Rua Sul, 789",
+      "cidade": "Porto Alegre",
+      "estado": "RS",
+      "cep": "90000-000",
+      "telefone": "(51) 3456-7890",
+      "email": "sul@siseja.com",
+      "coordenador": "Ana Costa",
+      "ativo": false,
+      "dataCriacao": "2024-03-20T14:45:00.000Z"
+    },
+    {
+      "id": "9fa4",
+      "nome": "35435",
+      "endereco": "45435",
+      "cidade": "435435",
+      "estado": "43543",
+      "cep": "435435345",
+      "telefone": "435435",
+      "email": "feheze@gmail.com",
+      "coordenador": "435345",
+      "ativo": true,
+      "dataCriacao": "2025-10-06T00:51:08.969Z"
+    },
+    {
+      "id": "25ea",
+      "nome": "Polo Arco Branco",
+      "endereco": "Av Angelica",
+      "cidade": "São Paulo",
+      "estado": "Sp",
+      "cep": "17012-020",
+      "telefone": "11961353221",
+      "email": "feheze@gmail.com",
+      "coordenador": "Roberto Leal",
+      "ativo": true,
+      "dataCriacao": "2025-10-06T02:13:15.955Z"
+    }
+  ]
+}

@@ -21,7 +21,7 @@ export class PoloDetailComponent {
 
   loadPolo(id: string | null) {
     if (id) {
-      this.poloService.getById(+id).subscribe((data) => {
+      this.poloService.getById(id).subscribe((data) => {
         this.polo.set(data);
       });
     }

@@ -1,1 +1,48 @@
-<p>navigation works!</p>
+<mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #drawer class="sidenav" [mode]="'side'" [opened]="true">
+      <mat-toolbar>SISEJA</mat-toolbar>
+      <mat-nav-list>
+        @for (item of navItems; track item.route) {
+        @if (!item.children) {
+          <a mat-list-item 
+             [routerLink]="item.route"
+             routerLinkActive="active">
+            <mat-icon matListItemIcon>{{item.icon}}</mat-icon>
+            <span matListItemTitle>{{item.label}}</span>
+          </a>
+        } @else {
+          <mat-expansion-panel class="mat-elevation-z0">
+            <mat-expansion-panel-header>
+            <mat-panel-title>
+              <mat-icon>{{item.icon}}</mat-icon>
+              <span>{{item.label}}</span>
+            </mat-panel-title>
+            </mat-expansion-panel-header>
+            @for (child of item.children; track child.route) {
+            <a mat-list-item 
+               [routerLink]="child.route"
+               routerLinkActive="active"
+               class="submenu-item">
+              <mat-icon matListItemIcon>{{child.icon}}</mat-icon>
+              <span matListItemTitle>{{child.label}}</span>
+            </a>
+            }
+          </mat-expansion-panel>
+        }
+        }
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <mat-toolbar color="primary">
+        <button mat-icon-button (click)="drawer.toggle()">
+        <mat-icon>menu</mat-icon>
+        </button>
+        <span>Sistema de Gestão EAD</span>
+      </mat-toolbar>
+
+      <div class="content">
+        <router-outlet />
+      </div>
+    </mat-sidenav-content>
+    </mat-sidenav-container>

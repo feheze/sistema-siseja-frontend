@@ -6,9 +6,9 @@ export const routesAll: Routes = [
     loadChildren: () => import('./pages/polos/polos.routes').then(m => m.polosRoutes)
   },
   {
-    path: '',
-    redirectTo: 'polos',
-    pathMatch: 'full'
-  }
+    path: 'dashboard',
+    loadChildren: () => import('./pages/dashboard/dashboard.routes').then(m => m.dashboardRoutes)
+  },
+  { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
   // Adicione outras rotas/lazy features aqui
 ];

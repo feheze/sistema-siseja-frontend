@@ -1,8 +1,27 @@
-/* Add your styles here */
-mat-form-field {
-  width: 100%;
-}
+ .polo-form-container {
+      padding: 24px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
 
-button {
-  margin-top: 16px;
-}
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 16px;
+
+      mat-form-field {
+        flex: 1;
+      }
+    }
+
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 24px;
+    }

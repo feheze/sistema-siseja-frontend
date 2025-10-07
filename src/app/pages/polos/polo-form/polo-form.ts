@@ -1,12 +1,14 @@
-import { Component, signal, ChangeDetectionStrategy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { PoloService } from '../../../services/polo';
-import { Polo } from '../../../models/polo';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
-import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { CommonModule } from '@angular/common';
+import { PoloService } from '../../../services/polo';
+import { EMPTY, catchError } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-polo-form',
@@ -14,39 +16,52 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
   styleUrls: ['./polo-form.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    CommonModule,
     ReactiveFormsModule,
     MatInputModule,
     MatFormFieldModule,
     MatButtonModule,
-    MatCheckboxModule
+    MatSlideToggleModule
   ]
 })
 export class PoloFormComponent {
-  poloForm: FormGroup;
-  polo = signal<Polo | null>(null);
+  private readonly poloService = inject(PoloService);
+  private readonly router = inject(Router);
+  private readonly fb = inject(FormBuilder);
+  private readonly destroyRef = inject(DestroyRef);
 
-  constructor(private fb: FormBuilder, private poloService: PoloService, private router: Router) {
-    this.poloForm = this.fb.group({
-      nome: ['', Validators.required],
-      endereco: ['', Validators.required],
-      cidade: ['', Validators.required],
-      estado: ['', Validators.required],
-      cep: ['', Validators.required],
-      telefone: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      coordenador: ['', Validators.required],
-      ativo: [true],
-      dataCriacao: [new Date()]
+  readonly loading = signal(false);
+
+  readonly form = this.fb.nonNullable.group({
+    nome: ['', [Validators.required]],
+    endereco: ['', [Validators.required]],
+    cidade: ['', [Validators.required]],
+    estado: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(2)]],
+    cep: ['', [Validators.required]],
+    telefone: ['', [Validators.required]],
+    email: ['', [Validators.required, Validators.email]],
+    coordenador: ['', [Validators.required]],
+    ativo: [true]
+  });
+
+  onSubmit(): void {
+    if (this.form.invalid) return;
+
+    this.loading.set(true);
+    
+    this.poloService.create(this.form.getRawValue()).pipe(
+      takeUntilDestroyed(this.destroyRef),
+      catchError(() => {
+        this.loading.set(false);
+        return EMPTY;
+      })
+    ).subscribe(() => {
+      this.loading.set(false);
+      this.router.navigate(['/polos']);
     });
   }
 
-  onSubmit() {
-    if (this.poloForm.valid) {
-      const newPolo: Polo = this.poloForm.value;
-      this.poloService.create(newPolo).subscribe(() => {
-        // Handle successful submission (e.g., navigate back or show a success message)
-        this.router.navigate(['/polos']); // Navigate back to the list of Polos
-      });
-    }
+  onCancel(): void {
+    this.router.navigate(['/polos']);
   }
 }

@@ -1,0 +1,80 @@
+<div class="polo-edit-container">
+      @if (loading()) {
+        <mat-progress-spinner mode="indeterminate" />
+      } @else if (error()) {
+        <div class="error-message">
+          {{ error() }}
+        </div>
+      } @else {
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <h2>Editar Polo</h2>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Nome</mat-label>
+            <input matInput formControlName="nome" required>
+            @if (form.get('nome')?.errors?.['required'] && form.get('nome')?.touched) {
+              <mat-error>Nome é obrigatório</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Endereço</mat-label>
+            <input matInput formControlName="endereco" required>
+            @if (form.get('endereco')?.errors?.['required'] && form.get('endereco')?.touched) {
+              <mat-error>Endereço é obrigatório</mat-error>
+            }
+          </mat-form-field>
+
+          <div class="form-row">
+            <mat-form-field appearance="outline">
+              <mat-label>Cidade</mat-label>
+              <input matInput formControlName="cidade" required>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Estado</mat-label>
+              <input matInput formControlName="estado" required maxlength="2">
+            </mat-form-field>
+          </div>
+
+          <div class="form-row">
+            <mat-form-field appearance="outline">
+              <mat-label>CEP</mat-label>
+              <input matInput formControlName="cep" required>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Telefone</mat-label>
+              <input matInput formControlName="telefone" required>
+            </mat-form-field>
+          </div>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" required type="email">
+            @if (form.get('email')?.errors?.['email'] && form.get('email')?.touched) {
+              <mat-error>Email inválido</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Coordenador</mat-label>
+            <input matInput formControlName="coordenador" required>
+          </mat-form-field>
+
+          <mat-slide-toggle formControlName="ativo" color="primary">
+            Polo Ativo
+          </mat-slide-toggle>
+
+          <div class="actions">
+            <button mat-button type="button" (click)="onCancel()">
+              Cancelar
+            </button>
+            <button mat-raised-button color="primary" type="submit"
+                    [disabled]="!form.valid || loading()">
+              {{ loading() ? 'Salvando...' : 'Salvar' }}
+            </button>
+          </div>
+        </form>
+      }
+    </div>

@@ -1,5 +1,5 @@
 export interface Polo {
-  id: number;
+  id: string;
   nome: string;
   endereco: string;
   cidade: string;
@@ -10,4 +10,13 @@ export interface Polo {
   coordenador: string;
   ativo: boolean;
   dataCriacao: Date;
+}
+
+export type CreatePoloDTO = Omit<Polo, 'id' | 'dataCriacao'>;
+
+export function createPolo(data: CreatePoloDTO): Omit<Polo, 'id'> {
+  return {
+    ...data,
+    dataCriacao: new Date()
+  };
 }

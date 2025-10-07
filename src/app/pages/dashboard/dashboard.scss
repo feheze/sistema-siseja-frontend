@@ -1,0 +1,68 @@
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.header h1 {
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.header .subtitle {
+  color: rgb(162, 193, 252);
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.metric-value {
+  font-size: 2.5rem;
+  font-weight: 500;
+  line-height: 1;
+  margin-top: 16px;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+
+  @media (max-width: 960px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.span-2 {
+  grid-column: span 2;
+  @media (max-width: 960px) {
+    grid-column: span 1;
+  }
+}
+
+table {
+  width: 100%;
+}
+
+.performance-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.performance-item .course-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  color: rgb(162, 193, 252);
+}
+
+.positive-change {
+  color: #4caf50; // Verde
+  font-size: 0.9rem;
+  font-weight: bold;
+}
